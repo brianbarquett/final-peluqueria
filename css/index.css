@@ -1,0 +1,189 @@
+.container-imagen {
+
+    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 70vh;
+}
+
+.boton-nav {
+    padding-right: 1vw;
+}
+
+.navbar-brand {
+    color: rgb(196, 168, 14);
+}
+
+html, body {
+    height: 100%; /* Asegura que el body ocupe toda la altura de la ventana */
+    margin: 0; /* Elimina márgenes por defecto */
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las secciones se envuelvan */
+    height: 100%; /* Asegura que el contenedor ocupe toda la altura */
+}
+
+.section {
+    height: 55vh; /* 55% de la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido verticalmente */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    font-size: 1.5rem; /* Tamaño del texto */
+    position: relative; /* Necesario para el pseudo-elemento */
+    overflow: hidden; /* Evita que el contenido se desborde */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    background-position: center;
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-size: cover;
+}
+
+.section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 204, 0, 0.7); /* Color de fondo semi-transparente */
+    transition: opacity 0.5s ease; /* Transición suave para la opacidad */
+    z-index: 1; /* Asegura que esté encima de la imagen de fondo */
+}
+
+.section:hover::before {
+    opacity: 0; /* Desvanece el color de fondo al pasar el cursor */
+}
+
+.section h2,
+.section p {
+    z-index: 2; /* Asegura que el texto esté por encima del pseudo-elemento */
+    color: rgb(255, 255, 255); /* Color del texto */
+    margin: 0; /* Elimina márgenes por defecto */
+}
+/* Colores diferentes para cada sección */
+.section-1::before {
+    background-color: rgba(237, 171, 145, 0.847); /* Rojo */
+}
+
+.section-2::before {
+    background-color: rgba(147, 216, 147, 0.7); /* Verde */
+}
+
+.section-3::before {
+    background-color: rgba(137, 209, 219, 0.7); /* Azul */
+}
+
+.section-4::before {
+    background-color: rgba(217, 217, 105, 0.774); /* Amarillo */
+}
+
+.section-5::before {
+    background-color: rgba(171, 123, 185, 0.7); /* Naranja */
+}
+
+.section-6::before {
+    background-color: rgba(85, 194, 152, 0.7); /* Púrpura */
+}
+.parr{
+    border-top:0.5vh solid rgb(255, 255, 255);
+    padding: 1vh;
+}
+.titulo-sec{
+    padding: 1vh;
+}
+/* Estilos portada */
+.portada {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+.portada::before {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.5); /* oscurece la imagen */
+}
+.portada-contenido {
+    position: relative;
+    z-index: 2;
+}
+.portada h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+.portada .linea {
+    width: 100px;
+    height: 4px;
+    background: #ffc107;
+    margin: 20px auto;
+}
+.btn-transparente {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+.btn-transparente:hover {
+    background: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+}
+
+/* Contenido secciones */
+.contenido-seccion {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+}
+ /* Flechas animadas */
+.contenedor-flechas {
+    margin-top: 55vh;
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+  position: absolute;
+  bottom: 0.5vh; /* Flechas abajo en la portada */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+   .flecha {
+  width: 35px;
+  height: 35px;
+  border-left: 3px solid #ffcc00;
+  border-bottom: 3px solid #ffcc00;
+  transform: rotate(-45deg);
+  animation: moverFlecha 1s infinite alternate ease-in-out;
+}
+
+.flecha:nth-child(2) {
+  animation-delay: 0.2s; /* segunda flecha con delay */
+}
+
+@keyframes moverFlecha {
+  0% {
+    transform: rotate(-45deg) translateY(0);
+  }
+  100% {
+    transform: rotate(-45deg) translateY(10px);
+  }
+} 
+
+.texto {
+  margin-bottom: 10vh; 
+  padding-top: 20vh; 
+  font-size: 3vh;
+}
