@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro e Inicio de Sesión</title>
+    <link rel="stylesheet" href="/css/registro.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" onclick="goBack()">◀ Volver al Inicio</a>
+    </div>
+    <div class="container" id="mainContainer">
+        <div class="panel" id="logoPanel">
+            <img src="https://via.placeholder.com/200" alt="Gold Style Logo" style="filter: brightness(0) invert(1);">
+            <h1>Gold Style</h1>
+        </div>
+        <div class="panel" id="formPanel">
+            <div id="signupFormDiv" class="form-div">
+                <h2>Registro de Usuario</h2>
+                <form id="signupForm" action="procesar_registro.php" method="POST" onsubmit="return validateSignup(event)">
+                    <input type="text" name="nombre" placeholder="Nombre completo" id="fullName" required>
+                    <input type="text" name="dni" placeholder="DNI" id="dni" required>
+                    <input type="number" name="edad" placeholder="Edad" id="age" required min="1" max="120">
+                    <input type="tel" name="telefono" placeholder="Teléfono" id="phone" required>
+                    <input type="password" name="contrasena" placeholder="Contraseña" id="password" required>
+                    <input type="email" name="correo" placeholder="Correo electrónico" id="email" required>
+                    <button type="submit">Registrarse</button>
+                    <button type="button" onclick="showLoginPanel()">Iniciar Sesión</button>
+                </form>
+            </div>
+            <div id="loginFormDiv" class="form-div" style="display: none;">
+                <h2>Iniciar Sesión</h2>
+                <form id="loginForm" action="procesar_login.php" method="POST" onsubmit="return validateLogin(event)">
+                    <input type="text" name="dni" placeholder="DNI" id="loginDni" required>
+                    <input type="password" name="contrasena" placeholder="Contraseña" id="loginPassword" required>
+                    <button type="submit">Ingresar</button>
+                    <button type="button" onclick="showSignupPanel()">Registrarse</button>
+                    <p>¿Olvidaste tu contraseña?</p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="error-modal" id="errorModal">
+        <h3>Error</h3>
+        <p id="errorMessage">Por favor, completa todos los campos correctamente.</p>
+        <button onclick="hideError()">Cerrar</button>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const params = new URLSearchParams(window.location.search);
+            const mode = params.get('mode');
+            if (mode === 'login') {
+                showLoginPanel();
+            }
+            if (params.get('error') === '1') {
+                showError('DNI o contraseña incorrectos.');
+            }
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+        function showError(message) {
+            const modal = document.getElementById('errorModal');
+            document.getElementById('errorMessage').textContent = message || 'Por favor, completa todos los campos correctamente.';
+            modal.style.display = 'block';
+        }
+        function hideError() {
+            document.getElementById('errorModal').style.display = 'none';
+        }
+        function showLoginPanel() {
+            const logoPanel = document.getElementById('logoPanel');
+            const formPanel = document.getElementById('formPanel');
+            const signupFormDiv = document.getElementById('signupFormDiv');
+            const loginFormDiv = document.getElementById('loginFormDiv');
+            signupFormDiv.style.display = 'none';
+            loginFormDiv.style.display = 'flex';
+            logoPanel.style.left = '50%';
+            formPanel.style.left = '0%';
+            logoPanel.style.background = '#8b5e34';
+            formPanel.style.background = '#1a2a44';
+            document.body.style.background = 'linear-gradient(to right, #8b5e34, #1a2a44)';
+        }
+        function showSignupPanel() {
+            const logoPanel = document.getElementById('logoPanel');
+            const formPanel = document.getElementById('formPanel');
+            const signupFormDiv = document.getElementById('signupFormDiv');
+            const loginFormDiv = document.getElementById('loginFormDiv');
+            loginFormDiv.style.display = 'none';
+            signupFormDiv.style.display = 'flex';
+            logoPanel.style.left = '0%';
+            formPanel.style.left = '50%';
+            logoPanel.style.background = '#1a2a44';
+            formPanel.style.background = '#8b5e34';
+            document.body.style.background = 'linear-gradient(to right, #1a2a44, #8b5e34)';
+        }
+        function validateSignup(event) {
+            const fullName = document.getElementById('fullName').value;
+            const dni = document.getElementById('dni').value;
+            const age = document.getElementById('age').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+
+            if (!fullName || !dni || !age || !phone || !password || !email) {
+                showError('Todos los campos son obligatorios.');
+                return false;
+            }
+            if (age < 1 || age > 120) {
+                showError('La edad debe estar entre 1 y 120 años.');
+                return false;
+            }
+            if (!/^\d{8,10}$/.test(phone)) {
+                showError('El teléfono debe tener entre 8 y 10 dígitos.');
+                return false;
+            }
+            if (password.length < 6) {
+                showError('La contraseña debe tener al menos 6 caracteres.');
+                return false;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('El correo electrónico no es válido.');
+                return false;
+            }
+
+            return true;
+        }
+        function validateLogin(event) {
+            const dni = document.getElementById('loginDni').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!dni || !password) {
+                showError('Por favor, ingresa DNI y contraseña.');
+                return false;
+            }
+            if (!/^\d{8}$/.test(dni)) {
+                showError('El DNI debe tener 8 dígitos.');
+                return false;
+            }
+            if (password.length < 6) {
+                showError('La contraseña debe tener al menos 6 caracteres.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

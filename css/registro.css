@@ -1,0 +1,107 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to right, #1a2a44, #8b5e34);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    transition: background 1s;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    z-index: 1000;
+}
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 16px;
+}
+.container {
+    position: relative;
+    overflow: hidden;
+    width: 90%;
+    max-width: 1000px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    margin-top: 60px;
+}
+.panel {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: left 1s, background 1s;
+}
+#logoPanel {
+    left: 0;
+    background: #1a2a44;
+}
+#formPanel {
+    left: 50%;
+    background: #8b5e34;
+}
+.form-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-div input {
+    width: 80%;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+}
+.form-div button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+.form-div button:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+.error-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ff4d4d;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    z-index: 1001;
+}
+.error-modal button {
+    margin-top: 10px;
+    padding: 5px 10px;
+}

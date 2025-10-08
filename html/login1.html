@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Gold Style</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, #1a2a44, #8b5e34);
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-start;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 16px;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 800px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            margin-top: 60px;
+        }
+        .left-panel {
+            flex: 1;
+            background: #1a2a44;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+        .left-panel img {
+            width: 150px;
+            height: auto;
+        }
+        .right-panel {
+            flex: 1;
+            background: #8b5e34;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+        .right-panel input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .right-panel button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+        }
+        .right-panel button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .signup-panel {
+            display: none;
+            flex: 1;
+            background: #8b5e34;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+        .signup-panel input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .signup-panel button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+        }
+        .signup-panel button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .error-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff4d4d;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+        }
+        .error-modal button {
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes slideIn {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(-100%); opacity: 0; }
+        }
+        @keyframes colorSwap {
+            0% { background: linear-gradient(to right, #1a2a44, #8b5e34); }
+            100% { background: linear-gradient(to right, #8b5e34, #1a2a44); }
+        }
+        .animate {
+            animation: slide 1s forwards, colorSwap 1s forwards;
+        }
+        .animate-in {
+            animation: slideIn 1s forwards;
+        }
+        .animate-out {
+            animation: slideOut 1s forwards;
+        }
+        .animate-color {
+            animation: colorSwap 1s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" onclick="goBack()">◀ Volver al Inicio</a>
+    </div>
+    <div class="container" id="mainContainer">
+        <div class="left-panel">
+            <img src="https://via.placeholder.com/150" alt="Gold Style Logo" style="filter: brightness(0) invert(1);">
+            <h1>Gold Style</h1>
+        </div>
+        <div class="right-panel" id="loginPanel">
+            <h2>Bienvenido a Gold Style</h2>
+            <form>
+                <input type="text" placeholder="DNI" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button type="button" onclick="showError()">Ingresar</button>
+                <button type="button" onclick="showSignup()">Crear Cuenta</button>
+                <p>¿Olvidaste tu contraseña?</p>
+            </form>
+        </div>
+        <div class="signup-panel" id="signupPanel">
+            <h2>Crear Nueva Cuenta</h2>
+            <form>
+                <input type="text" placeholder="Nombre Completo" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button type="button" onclick="submitSignup()">Enviar</button>
+                <button type="button" onclick="showLogin()">Volver a Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+    <div class="error-modal" id="errorModal">
+        <h3>Error de inicio de sesión</h3>
+        <p>DNI o contraseña incorrectos.</p>
+        <button onclick="hideError()">Cerrar</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+        function showError() {
+            document.getElementById('errorModal').style.display = 'block';
+        }
+        function hideError() {
+            document.getElementById('errorModal').style.display = 'none';
+        }
+        function showSignup() {
+            const container = document.getElementById('mainContainer');
+            const loginPanel = document.getElementById('loginPanel');
+            const signupPanel = document.getElementById('signupPanel');
+            loginPanel.classList.add('animate-out');
+            setTimeout(() => {
+                loginPanel.style.display = 'none';
+                signupPanel.style.display = 'flex';
+                signupPanel.classList.add('animate-in');
+                container.classList.add('animate-color');
+                setTimeout(() => {
+                    container.classList.remove('animate-color');
+                    loginPanel.classList.remove('animate-out');
+                    signupPanel.classList.remove('animate-in');
+                }, 1000);
+            }, 1000);
+        }
+        function showLogin() {
+            const container = document.getElementById('mainContainer');
+            const loginPanel = document.getElementById('loginPanel');
+            const signupPanel = document.getElementById('signupPanel');
+            signupPanel.classList.add('animate-out');
+            setTimeout(() => {
+                signupPanel.style.display = 'none';
+                loginPanel.style.display = 'flex';
+                loginPanel.classList.add('animate-in');
+                container.classList.add('animate-color');
+                setTimeout(() => {
+                    container.classList.remove('animate-color');
+                    signupPanel.classList.remove('animate-out');
+                    loginPanel.classList.remove('animate-in');
+                }, 1000);
+            }, 1000);
+        }
+        function submitSignup() {
+            alert("Cuenta creada exitosamente!");
+            showLogin();
+        }
+    </script>
+</body>
+</html>
