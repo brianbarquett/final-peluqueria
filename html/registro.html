@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Configuración básica del documento HTML -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro e Inicio de Sesión</title>
+    <!-- Enlace al archivo CSS externo para estilos -->
     <link rel="stylesheet" href="/css/registro.css">
 </head>
 <body>
+    <!-- Barra de navegación superior -->
     <div class="navbar">
         <a href="#" onclick="goBack()">◀ Volver al Inicio</a>
     </div>
+    <!-- Contenedor principal para los paneles de logo y formulario -->
     <div class="container" id="mainContainer">
+        <!-- Panel para el logo y nombre de la barbería -->
         <div class="panel" id="logoPanel">
             <img src="https://via.placeholder.com/200" alt="Gold Style Logo" style="filter: brightness(0) invert(1);">
             <h1>Gold Style</h1>
         </div>
+        <!-- Panel para los formularios de registro e inicio de sesión -->
         <div class="panel" id="formPanel">
+            <!-- Sección del formulario de registro -->
             <div id="signupFormDiv" class="form-div">
                 <h2>Registro de Usuario</h2>
-                <form id="signupForm" action="procesar_registro.php" method="POST" onsubmit="return validateSignup(event)">
+                <form id="signupForm" action="/php/procesar_registro.php" method="POST" onsubmit="return validateSignup(event)">
                     <input type="text" name="nombre" placeholder="Nombre completo" id="fullName" required>
                     <input type="text" name="dni" placeholder="DNI" id="dni" required>
                     <input type="number" name="edad" placeholder="Edad" id="age" required min="1" max="120">
@@ -29,9 +36,10 @@
                     <button type="button" onclick="showLoginPanel()">Iniciar Sesión</button>
                 </form>
             </div>
+            <!-- Sección del formulario de inicio de sesión (oculta inicialmente) -->
             <div id="loginFormDiv" class="form-div" style="display: none;">
                 <h2>Iniciar Sesión</h2>
-                <form id="loginForm" action="procesar_login.php" method="POST" onsubmit="return validateLogin(event)">
+                <form id="loginForm" action="/php/procesar_login.php" method="POST" onsubmit="return validateLogin(event)">
                     <input type="text" name="dni" placeholder="DNI" id="loginDni" required>
                     <input type="password" name="contrasena" placeholder="Contraseña" id="loginPassword" required>
                     <button type="submit">Ingresar</button>
@@ -41,6 +49,7 @@
             </div>
         </div>
     </div>
+    <!-- Modal para mostrar errores -->
     <div class="error-modal" id="errorModal">
         <h3>Error</h3>
         <p id="errorMessage">Por favor, completa todos los campos correctamente.</p>
@@ -48,6 +57,7 @@
     </div>
 
     <script>
+        // Evento que se ejecuta al cargar la página para manejar parámetros de URL
         window.addEventListener('load', () => {
             const params = new URLSearchParams(window.location.search);
             const mode = params.get('mode');
@@ -59,17 +69,21 @@
             }
         });
 
+        // Función para volver a la página anterior
         function goBack() {
             window.history.back();
         }
+        // Función para mostrar el modal de error con un mensaje
         function showError(message) {
             const modal = document.getElementById('errorModal');
             document.getElementById('errorMessage').textContent = message || 'Por favor, completa todos los campos correctamente.';
             modal.style.display = 'block';
         }
+        // Función para ocultar el modal de error
         function hideError() {
             document.getElementById('errorModal').style.display = 'none';
         }
+        // Función para mostrar el panel de inicio de sesión y animar el cambio
         function showLoginPanel() {
             const logoPanel = document.getElementById('logoPanel');
             const formPanel = document.getElementById('formPanel');
@@ -83,6 +97,7 @@
             formPanel.style.background = '#1a2a44';
             document.body.style.background = 'linear-gradient(to right, #8b5e34, #1a2a44)';
         }
+        // Función para mostrar el panel de registro y animar el cambio
         function showSignupPanel() {
             const logoPanel = document.getElementById('logoPanel');
             const formPanel = document.getElementById('formPanel');
@@ -96,6 +111,7 @@
             formPanel.style.background = '#8b5e34';
             document.body.style.background = 'linear-gradient(to right, #1a2a44, #8b5e34)';
         }
+        // Función de validación del formulario de registro antes de enviar
         function validateSignup(event) {
             const fullName = document.getElementById('fullName').value;
             const dni = document.getElementById('dni').value;
@@ -127,6 +143,7 @@
 
             return true;
         }
+        // Función de validación del formulario de inicio de sesión antes de enviar
         function validateLogin(event) {
             const dni = document.getElementById('loginDni').value;
             const password = document.getElementById('loginPassword').value;
