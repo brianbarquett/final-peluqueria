@@ -42,14 +42,6 @@ $portada = $stmtPortada->fetch();
             <div class="linea"></div>
             <p><?= htmlspecialchars($portada['descripcion']) ?></p>
             <a href="sacar_turno.php" class="btn-transparente mt-3">Sacar turno</a><br>
-            <button class="btn btn-warning mt-3"
-                onclick='editarPortada(
-                    <?= json_encode($portada["titulo"]) ?>, 
-                    <?= json_encode($portada["descripcion"]) ?>, 
-                    <?= json_encode($portada["imagen"]) ?>
-                )'>
-                Editar portada
-            </button>
             <div class="texto">Leer más</div>
             <div class="contenedor-flechas">
             <div class="flecha"></div>
@@ -75,15 +67,6 @@ $portada = $stmtPortada->fetch();
                         <div class="contenido-seccion">
                             <h2 class="titulo-sec"><?= htmlspecialchars($servicio['titulo']) ?></h2>
                             <p class="parr"><?= htmlspecialchars($servicio['descripcion']) ?></p>
-                            <button class="btn btn-warning mt-2"
-                                onclick='editarServicio(
-                                    <?= json_encode($seccion) ?>, 
-                                    <?= json_encode($servicio["titulo"]) ?>, 
-                                    <?= json_encode($servicio["descripcion"]) ?>, 
-                                    <?= json_encode($servicio["imagen"]) ?>
-                                )'>
-                                Editar
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -91,88 +74,8 @@ $portada = $stmtPortada->fetch();
         </div>
     </div>
 
-    <!-- MODAL EDITAR PORTADA -->
-    <div class="modal fade" id="modalEditarPortada" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <form method="POST" action="guardar_portada.php" enctype="multipart/form-data" class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Editar Portada</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Campo oculto para mantener la imagen actual -->
-          <input type="hidden" name="imagen_actual" id="portadaImagenActual">
-              <div class="mb-3">
-                  <label>Título</label>
-                  <input type="text" class="form-control" name="titulo" id="portadaTituloInput" required>
-              </div>
-              <div class="mb-3">
-                  <label>Descripción</label>
-                  <textarea class="form-control" name="descripcion" id="portadaDescripcionInput" required></textarea>
-              </div>
-              <div class="mb-3">
-                  <label>Imagen actual</label><br>
-                  <img id="portadaImagenPreview" src="" alt="Imagen" class="img-fluid mb-2" style="max-height: 150px;">
-                  <input type="file" class="form-control" name="imagen">
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- MODAL EDITAR SERVICIO -->
-    <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <form method="POST" action="guardar_servicio.php" enctype="multipart/form-data" class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Editar Servicio</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-              <input type="hidden" name="seccion" id="seccionInput">
-              <div class="mb-3">
-                  <label>Título</label>
-                  <input type="text" class="form-control" name="titulo" id="tituloInput" required>
-              </div>
-              <div class="mb-3">
-                  <label>Descripción</label>
-                  <textarea class="form-control" name="descripcion" id="descripcionInput" required></textarea>
-              </div>
-              <div class="mb-3">
-                  <label>Imagen actual</label><br>
-                  <img id="imagenPreview" src="" alt="Imagen" class="img-fluid mb-2" style="max-height: 150px;">
-                  <input type="file" class="form-control" name="imagen">
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        function editarServicio(seccion, titulo, descripcion, imagen) {
-            document.getElementById('seccionInput').value = seccion;
-            document.getElementById('tituloInput').value = titulo;
-            document.getElementById('descripcionInput').value = descripcion;
-            document.getElementById('imagenPreview').src = 'uploads/' + imagen;
-            new bootstrap.Modal(document.getElementById('modalEditar')).show();
-        }
-
-        function editarPortada(titulo, descripcion, imagen) {
-        document.getElementById('portadaTituloInput').value = titulo;
-        document.getElementById('portadaDescripcionInput').value = descripcion;
-        document.getElementById('portadaImagenPreview').src = imagen ? 'uploads/' + imagen : '';
-        document.getElementById('portadaImagenActual').value = imagen; // mantiene la imagen actual
-        new bootstrap.Modal(document.getElementById('modalEditarPortada')).show();
-        }
-    </script>
 </body>
 </html>

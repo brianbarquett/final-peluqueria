@@ -36,17 +36,18 @@ $portada = $stmtPortada->fetch();
     </nav>
 
     <!-- PORTADA -->
-    <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen']) ?>');">
+    <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen'] ?? '') ?>');">  <!-- Ajustado: agrega 'uploads/' solo aquí, asumiendo que BD tiene solo filename -->
         <div class="portada-contenido">
-            <h1><?= htmlspecialchars($portada['titulo']) ?></h1>
+            <h1><?= htmlspecialchars($portada['titulo'] ?? '') ?></h1>
             <div class="linea"></div>
-            <p><?= htmlspecialchars($portada['descripcion']) ?></p>
+            <p><?= htmlspecialchars($portada['descripcion'] ?? '') ?></p>
             <a href="sacar_turno.php" class="btn-transparente mt-3">Sacar turno</a><br>
             <button class="btn btn-warning mt-3"
                 onclick='editarPortada(
-                    <?= json_encode($portada["titulo"]) ?>, 
-                    <?= json_encode($portada["descripcion"]) ?>, 
-                    <?= json_encode($portada["imagen"]) ?>
+                    <?= json_encode($portada["titulo"] ?? '') ?>, 
+                    <?= json_encode($portada["descripcion"] ?? '') ?>, 
+                    <?= json_encode($portada["imagen"] ?? '') ?>,
+                    <?= json_encode($portada["id"] ?? '') ?>
                 )'>
                 Editar portada
             </button>
@@ -100,8 +101,10 @@ $portada = $stmtPortada->fetch();
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <!-- Campo oculto para mantener la imagen actual -->
-          <input type="hidden" name="imagen_actual" id="portadaImagenActual">
+            <!-- Campo oculto para el ID -->
+            <input type="hidden" name="id" id="portadaIdInput">
+            <!-- Campo oculto para mantener la imagen actual (solo filename) -->
+            <input type="hidden" name="imagen_actual" id="portadaImagenActual">
               <div class="mb-3">
                   <label>Título</label>
                   <input type="text" class="form-control" name="titulo" id="portadaTituloInput" required>
@@ -112,7 +115,8 @@ $portada = $stmtPortada->fetch();
               </div>
               <div class="mb-3">
                   <label>Imagen actual</label><br>
-                  <img id="portadaImagenPreview" src="" alt="Imagen" class="img-fluid mb-2" style="max-height: 150px;">
+                  <small id="portadaRutaActual" class="text-muted"></small>  <!-- Agregado: muestra la ruta en texto para depuración -->
+                  <img id="portadaImagenPreview" src="" alt="Vista previa de la imagen" class="img-fluid mb-2" style="max-height: 150px;">
                   <input type="file" class="form-control" name="imagen">
               </div>
           </div>
@@ -162,16 +166,18 @@ $portada = $stmtPortada->fetch();
             document.getElementById('seccionInput').value = seccion;
             document.getElementById('tituloInput').value = titulo;
             document.getElementById('descripcionInput').value = descripcion;
-            document.getElementById('imagenPreview').src = 'uploads/' + imagen;
+            document.getElementById('imagenPreview').src = 'uploads/' + (imagen || '');  // Ajustado: agrega 'uploads/'
             new bootstrap.Modal(document.getElementById('modalEditar')).show();
         }
 
-        function editarPortada(titulo, descripcion, imagen) {
-        document.getElementById('portadaTituloInput').value = titulo;
-        document.getElementById('portadaDescripcionInput').value = descripcion;
-        document.getElementById('portadaImagenPreview').src = imagen ? 'uploads/' + imagen : '';
-        document.getElementById('portadaImagenActual').value = imagen; // mantiene la imagen actual
-        new bootstrap.Modal(document.getElementById('modalEditarPortada')).show();
+        function editarPortada(titulo, descripcion, imagen, id) {
+            document.getElementById('portadaTituloInput').value = titulo;
+            document.getElementById('portadaDescripcionInput').value = descripcion;
+            document.getElementById('portadaImagenPreview').src = imagen ? 'uploads/' + imagen : '';  // Ajustado: agrega 'uploads/' solo aquí
+            document.getElementById('portadaImagenActual').value = imagen || '';  // Mantiene solo filename
+            document.getElementById('portadaIdInput').value = id;
+            document.getElementById('portadaRutaActual').innerText = imagen ? 'Ruta actual: uploads/' + imagen : 'No hay imagen actual';  // Agregado: muestra ruta en texto
+            new bootstrap.Modal(document.getElementById('modalEditarPortada')).show();
         }
     </script>
 </body>
