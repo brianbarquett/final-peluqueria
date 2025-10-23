@@ -1,5 +1,10 @@
+:root {
+    font-size: 16px; /* Base para rem: 1rem = 16px */
+}
+
 .cover {
     height: 100vh;
+    width: 100vw;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -11,12 +16,15 @@
     text-align: center;
     position: relative;
 }
+
 .cover-content {
     z-index: 1;
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(3rem);
     animation: fadeInUp 1s ease-out forwards;
+    position: relative; /* Para posicionar el botón relativo al contenido */
 }
+
 .cover-overlay {
     position: absolute;
     top: 0;
@@ -26,15 +34,19 @@
     background: rgba(0, 0, 0, 0.65);
     z-index: 0;
 }
+
 .edit-cover-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    bottom: 15rem; /* Arriba de "Leer más" a una distancia bonita */
+    left: 45.7%;
     z-index: 2;
+    transform: translateY(3rem);
+    animation: fadeInUp 1s ease-out forwards;
 }
+
 .read-more {
     position: absolute;
-    bottom: 20px;
+    bottom: 1.25rem;
     width: 100%;
     text-align: center;
     z-index: 1;
@@ -42,65 +54,74 @@
     font-size: 1.2rem;
     font-weight: bold;
     text-shadow: 
-        0 0 5px #FFD700,
-        0 0 10px #FFE066,
-        0 0 20px #FFFFFF;
+        0 0 0.3125rem #FFD700,
+        0 0 0.625rem #FFE066,
+        0 0 1.25rem #FFFFFF;
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(3rem);
     animation: fadeInUp 1s ease-out 0.3s forwards;
 }
+
 .arrows {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
+
 .arrows i {
     font-size: 2rem;
     color: #FFD700;
     text-shadow: 
-        0 0 5px #FFD700,
-        0 0 10px #FFE066,
-        0 0 20px #FFFFFF;
-    margin: 2px 0;
+        0 0 0.3125rem #FFD700,
+        0 0 0.625rem #FFE066,
+        0 0 1.25rem #FFFFFF;
+    margin: 0.125rem 0;
     animation: flowDown 1.5s ease-in-out infinite;
 }
+
 .arrows i:nth-child(2) {
     animation-delay: 0.3s;
 }
+
 @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(50px); }
+    0% { opacity: 0; transform: translateY(3rem); }
     100% { opacity: 1; transform: translateY(0); }
 }
+
 @keyframes flowDown {
-    0% { transform: translateY(0); opacity: 1; text-shadow: 0 0 5px #FFD700, 0 0 10px #FFE066, 0 0 20px #FFFFFF; }
-    50% { transform: translateY(15px); opacity: 0.3; text-shadow: 0 0 10px #FFD700, 0 0 20px #FFE066, 0 0 30px #FFFFFF; }
-    100% { transform: translateY(0); opacity: 1; text-shadow: 0 0 5px #FFD700, 0 0 10px #FFE066, 0 0 20px #FFFFFF; }
+    0% { transform: translateY(0); opacity: 1; text-shadow: 0 0 0.3125rem #FFD700, 0 0 0.625rem #FFE066, 0 0 1.25rem #FFFFFF; }
+    50% { transform: translateY(0.9375rem); opacity: 0.3; text-shadow: 0 0 0.625rem #FFD700, 0 0 1.25rem #FFE066, 0 0 1.875rem #FFFFFF; }
+    100% { transform: translateY(0); opacity: 1; text-shadow: 0 0 0.3125rem #FFD700, 0 0 0.625rem #FFE066, 0 0 1.25rem #FFFFFF; }
 }
+
 .content-section {
     width: 100vw;
-    height: 30vh;
+    height: 50vh; /* Aumentado a 50% del alto de la pantalla */
     display: flex;
     align-items: center;
     padding: 0;
     margin: 0;
     overflow: hidden;
-    background: linear-gradient(180deg, #1E3A8A, #60A5FA);
+    background: linear-gradient(180deg, #131f40, #04234a);
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(3rem);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
+
 .content-section.visible {
     opacity: 1;
     transform: translateY(0);
 }
+
 .content-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .text-container {
-    padding: 20px;
+    padding: 1.25rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -108,27 +129,118 @@
     align-items: center;
     text-align: center;
     color: white;
+    font-size: 1rem; /* Base en rem */
 }
-.text-container h2, .text-container p {
-    color: white;
+
+.text-container h2 {
+    font-size: 2.45rem; /* Reducido un 30% (era 3.5rem) */
+    margin-bottom: 0.625rem;
 }
+
+.text-container p {
+    font-size: 1.26rem; /* Reducido un 30% (era 1.8rem) */
+    margin-bottom: 0.625rem;
+}
+
 .edit-btn {
-    margin-top: 15px;
+    margin-top: 0.9375rem;
     background-color: #1E3A8A;
     border: none;
+    font-size: 1rem;
 }
+
 .edit-btn:hover {
     background-color: #2563EB;
 }
+
 .add-btn-section {
     text-align: center;
-    padding: 20px 0;
+    padding: 1.25rem 0;
 }
+
 .add-btn {
     background-color: #1E3A8A;
     color: white;
     border: none;
+    font-size: 1rem;
 }
+
 .add-btn:hover {
     background-color: #2563EB;
+}
+
+/* Media Queries para Responsividad */
+
+/* Móviles (pantallas < 768px) */
+@media (max-width: 767px) {
+    .cover {
+        height: 80vh; /* Reducir altura para móviles */
+    }
+
+    .cover-content h1 {
+        font-size: 2rem;
+    }
+
+    .cover-content p {
+        font-size: 1rem;
+    }
+
+    .read-more {
+        font-size: 1rem;
+        bottom: 1rem;
+    }
+
+    .arrows i {
+        font-size: 1.5rem;
+    }
+
+    .content-section {
+        flex-direction: column; /* Apilar verticalmente en móviles */
+        height: 80vh; /* Aumentar para mejor visibilidad en móviles */
+    }
+
+    .text-container {
+        padding: 1rem;
+        order: 1; /* Texto arriba en móviles */
+    }
+
+    .text-container h2 {
+        font-size: 2.1rem; /* Ajuste responsivo reducido 30% */
+    }
+
+    .text-container p {
+        font-size: 1.05rem; /* Ajuste responsivo reducido 30% */
+    }
+
+    .content-image {
+        order: 2; /* Imagen abajo */
+        height: 50%; /* Mitad del contenedor */
+    }
+
+    .edit-btn, .add-btn {
+        font-size: 0.875rem;
+    }
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .cover-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .cover-content p {
+        font-size: 1.2rem;
+    }
+
+    .content-section {
+        height: 60vh; /* Ajuste intermedio */
+    }
+
+    .text-container h2 {
+        font-size: 2.45rem; /* Ajuste intermedio reducido 30% */
+    }
+
+    .text-container p {
+        font-size: 1.26rem; /* Ajuste intermedio reducido 30% */
+    }
 }

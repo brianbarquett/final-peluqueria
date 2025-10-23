@@ -6,7 +6,7 @@ try {
     $stmtPortada = $pdo->query("SELECT * FROM portada ORDER BY id ASC LIMIT 1 OFFSET 1");
     $portada = $stmtPortada->fetch();
 
-    // Si no existe, usa valores predeterminados (puedes eliminar esto después de crear id=2)
+    // Si no existe, usa valores predeterminados
     if (!$portada) {
         $portada = [
             'titulo' => 'Portada Predeterminada para Servicios',
@@ -15,7 +15,7 @@ try {
         ];
     }
 
-    // Obtener datos de los contenedores
+    // Obtener datos de los contenedores (incluyendo precio)
     $stmt = $pdo->prepare("SELECT * FROM contenidos ORDER BY id ASC");
     $stmt->execute();
     $contenidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -30,7 +30,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portada Responsiva con Contenedores</title>
+    <title>Portada Responsiva con Contenedores - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/servicio.css">
@@ -39,14 +39,14 @@ try {
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <a class="navbar-brand" href="#">BarberShop Gold Style - Admin</a>
             <div class="boton-nav">
                 <a href="../html/login.html" class="btn btn-outline-light">Iniciar sesión</a>
             </div>
         </div>
     </nav>
     <!-- Portada -->
-    <div class="cover" style="background-image: url('/php/uploads/<?php echo isset($portada['imagen']) ? htmlspecialchars($portada['imagen']) : 'https://via.placeholder.com/1920x1080'; ?>');">  <!-- Agregado "uploads/" para coincidir con DB -->
+    <div class="cover" style="background-image: url('/php/uploads/<?php echo isset($portada['imagen']) ? htmlspecialchars($portada['imagen']) : 'https://via.placeholder.com/1920x1080'; ?>');">
         <div class="cover-overlay"></div>
         <div class="cover-content">
             <h1><?php echo isset($portada['titulo']) ? htmlspecialchars($portada['titulo']) : '¡Bienvenido a mi sitio!'; ?></h1>
@@ -71,6 +71,7 @@ try {
                         <div class="col-md-7 text-container">
                             <h2><?php echo htmlspecialchars($contenido['titulo']); ?></h2>
                             <p><?php echo htmlspecialchars($contenido['descripcion']); ?></p>
+                            <p>Precio: $<?php echo number_format($contenido['precio'], 2); ?></p> <!-- Mostrar precio -->
                             <button class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $contenido['id']; ?>">Editar</button>
                         </div>
                         <div class="col-md-5">
@@ -83,6 +84,7 @@ try {
                         <div class="col-md-7 order-md-2 order-1 text-container">
                             <h2><?php echo htmlspecialchars($contenido['titulo']); ?></h2>
                             <p><?php echo htmlspecialchars($contenido['descripcion']); ?></p>
+                            <p>Precio: $<?php echo number_format($contenido['precio'], 2); ?></p> <!-- Mostrar precio -->
                             <button class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $contenido['id']; ?>">Editar</button>
                         </div>
                     <?php endif; ?>
@@ -108,6 +110,10 @@ try {
                             <div class="mb-3">
                                 <label for="descripcion<?php echo $contenido['id']; ?>" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="descripcion<?php echo $contenido['id']; ?>" name="descripcion" required><?php echo htmlspecialchars($contenido['descripcion']); ?></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="precio<?php echo $contenido['id']; ?>" class="form-label">Precio</label>
+                                <input type="number" class="form-control" id="precio<?php echo $contenido['id']; ?>" name="precio" step="0.01" value="<?php echo $contenido['precio']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="imagen<?php echo $contenido['id']; ?>" class="form-label">Imagen</label>
@@ -146,6 +152,10 @@ try {
                             <textarea class="form-control" id="descripcionNuevo" name="descripcion" required></textarea>
                         </div>
                         <div class="mb-3">
+                            <label for="precioNuevo" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precioNuevo" name="precio" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="imagenNuevo" class="form-label">Imagen</label>
                             <input type="file" class="form-control" id="imagenNuevo" name="imagen" accept="image/*">
                         </div>
@@ -166,7 +176,7 @@ try {
                 </div>
                 <div class="modal-body">
                     <form action="/php/guardar_portada.php" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="2">  <!-- Cambiado a 2 para guardar en la segunda fila -->
+                        <input type="hidden" name="id" value="2">
                         <div class="mb-3">
                             <label for="tituloCover" class="form-label">Título</label>
                             <input type="text" class="form-control" id="tituloCover" name="titulo" value="<?php echo isset($portada['titulo']) ? htmlspecialchars($portada['titulo']) : ''; ?>" required>

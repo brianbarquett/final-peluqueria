@@ -3,18 +3,19 @@ require_once 'conexion.php';
 
 try {
     // Validar datos recibidos
-    if (!isset($_POST['titulo']) || !isset($_POST['descripcion'])) {
-        throw new Exception("Título y descripción son obligatorios");
+    if (!isset($_POST['titulo']) || !isset($_POST['descripcion']) || !isset($_POST['precio'])) {
+        throw new Exception("Título, descripción y precio son obligatorios");
     }
 
     $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
     $titulo = trim($_POST['titulo']);
     $descripcion = trim($_POST['descripcion']);
+    $precio = filter_input(INPUT_POST, 'precio', FILTER_VALIDATE_FLOAT);
     $imagen = null;
 
-    // Validar que título y descripción no estén vacíos
-    if (empty($titulo) || empty($descripcion)) {
-        throw new Exception("Título y descripción no pueden estar vacíos");
+    // Validar que título y descripción no estén vacíos, y precio sea válido
+    if (empty($titulo) || empty($descripcion) || $precio === false || $precio < 0) {
+        throw new Exception("Los campos son inválidos o el precio no es válido");
     }
 
     // Manejo de la imagen
@@ -38,16 +39,17 @@ try {
 
     if ($id === 0) {
         // Insertar nuevo contenedor
-        $stmt = $pdo->prepare("INSERT INTO contenidos (titulo, descripcion, imagen) VALUES (:titulo, :descripcion, :imagen)");
+        $stmt = $pdo->prepare("INSERT INTO contenidos (titulo, descripcion, precio, imagen) VALUES (:titulo, :descripcion, :precio, :imagen)");
         $stmt->execute([
             ':titulo' => $titulo,
             ':descripcion' => $descripcion,
+            ':precio' => $precio,
             ':imagen' => $imagen
         ]);
     } else {
         // Actualizar contenedor existente
-        $sql = "UPDATE contenidos SET titulo = :titulo, descripcion = :descripcion";
-        $params = [':titulo' => $titulo, ':descripcion' => $descripcion];
+        $sql = "UPDATE contenidos SET titulo = :titulo, descripcion = :descripcion, precio = :precio";
+        $params = [':titulo' => $titulo, ':descripcion' => $descripcion, ':precio' => $precio];
         
         if ($imagen) {
             $sql .= ", imagen = :imagen";
@@ -61,7 +63,7 @@ try {
         $stmt->execute($params);
     }
 
-    header("Location: /php/servicios/corte.php");  // Redirección absoluta para mayor consistencia
+    header("Location: admin/cortes_admin.php");  // Redirige a la versión admin después de guardar
     exit;
 } catch (Exception $e) {
     echo "Error: " . htmlspecialchars($e->getMessage());

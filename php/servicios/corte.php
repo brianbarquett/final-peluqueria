@@ -15,7 +15,7 @@ try {
         ];
     }
 
-    // Obtener datos de los contenedores
+    // Obtener datos de los contenedores (incluyendo precio)
     $stmt = $pdo->prepare("SELECT * FROM contenidos ORDER BY id ASC");
     $stmt->execute();
     $contenidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -70,6 +70,7 @@ try {
                         <div class="col-md-7 text-container">
                             <h2><?php echo htmlspecialchars($contenido['titulo']); ?></h2>
                             <p><?php echo htmlspecialchars($contenido['descripcion']); ?></p>
+                            <p>Precio: $<?php echo number_format($contenido['precio'], 2); ?></p> <!-- Mostrar precio -->
                         </div>
                         <div class="col-md-5">
                             <img src="/php/<?php echo $contenido['imagen'] ? htmlspecialchars($contenido['imagen']) : 'https://via.placeholder.com/500'; ?>" class="content-image" alt="Imagen <?php echo $contenido['id']; ?>">
@@ -81,6 +82,7 @@ try {
                         <div class="col-md-7 order-md-2 order-1 text-container">
                             <h2><?php echo htmlspecialchars($contenido['titulo']); ?></h2>
                             <p><?php echo htmlspecialchars($contenido['descripcion']); ?></p>
+                            <p>Precio: $<?php echo number_format($contenido['precio'], 2); ?></p> <!-- Mostrar precio -->
                         </div>
                     <?php endif; ?>
                 </div>
