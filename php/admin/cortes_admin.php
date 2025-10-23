@@ -2,10 +2,18 @@
 require_once '../conexion.php';
 
 try {
-    // Obtener datos de la portada
-    $stmt = $pdo->prepare("SELECT * FROM portada WHERE id = 1");
-    $stmt->execute();
-    $portada = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Obtener datos de la portada (segunda fila: id=2 o la segunda disponible)
+    $stmtPortada = $pdo->query("SELECT * FROM portada ORDER BY id ASC LIMIT 1 OFFSET 1");
+    $portada = $stmtPortada->fetch();
+
+    // Si no existe, usa valores predeterminados (puedes eliminar esto después de crear id=2)
+    if (!$portada) {
+        $portada = [
+            'titulo' => 'Portada Predeterminada para Servicios',
+            'descripcion' => 'Descripción temporal hasta que se cree id=2 en la DB.',
+            'imagen' => 'https://via.placeholder.com/1920x1080'  // Placeholder temporal
+        ];
+    }
 
     // Obtener datos de los contenedores
     $stmt = $pdo->prepare("SELECT * FROM contenidos ORDER BY id ASC");
@@ -38,7 +46,7 @@ try {
         </div>
     </nav>
     <!-- Portada -->
-    <div class="cover" style="background-image: url('<?php echo isset($portada['imagen']) ? htmlspecialchars($portada['imagen']) : 'https://via.placeholder.com/1920x1080'; ?>');">
+    <div class="cover" style="background-image: url('/php/uploads/<?php echo isset($portada['imagen']) ? htmlspecialchars($portada['imagen']) : 'https://via.placeholder.com/1920x1080'; ?>');">  <!-- Agregado "uploads/" para coincidir con DB -->
         <div class="cover-overlay"></div>
         <div class="cover-content">
             <h1><?php echo isset($portada['titulo']) ? htmlspecialchars($portada['titulo']) : '¡Bienvenido a mi sitio!'; ?></h1>
@@ -66,11 +74,11 @@ try {
                             <button class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $contenido['id']; ?>">Editar</button>
                         </div>
                         <div class="col-md-5">
-                            <img src="<?php echo $contenido['imagen'] ? htmlspecialchars($contenido['imagen']) : 'https://via.placeholder.com/500'; ?>" class="content-image" alt="Imagen <?php echo $contenido['id']; ?>">
+                            <img src="/php/<?php echo $contenido['imagen'] ? htmlspecialchars($contenido['imagen']) : 'https://via.placeholder.com/500'; ?>" class="content-image" alt="Imagen <?php echo $contenido['id']; ?>">
                         </div>
                     <?php else: ?>
                         <div class="col-md-5 order-md-1 order-2">
-                            <img src="<?php echo $contenido['imagen'] ? htmlspecialchars($contenido['imagen']) : 'https://via.placeholder.com/500'; ?>" class="content-image" alt="Imagen <?php echo $contenido['id']; ?>">
+                            <img src="/php/<?php echo $contenido['imagen'] ? htmlspecialchars($contenido['imagen']) : 'https://via.placeholder.com/500'; ?>" class="content-image" alt="Imagen <?php echo $contenido['id']; ?>">
                         </div>
                         <div class="col-md-7 order-md-2 order-1 text-container">
                             <h2><?php echo htmlspecialchars($contenido['titulo']); ?></h2>
@@ -91,7 +99,7 @@ try {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="guardar_corte.php" method="POST" enctype="multipart/form-data">
+                        <form action="/php/guardar_corte.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?php echo $contenido['id']; ?>">
                             <div class="mb-3">
                                 <label for="titulo<?php echo $contenido['id']; ?>" class="form-label">Título</label>
@@ -127,7 +135,7 @@ try {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="guardar.php" method="POST" enctype="multipart/form-data">
+                    <form action="/php/guardar_corte.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="0">
                         <div class="mb-3">
                             <label for="tituloNuevo" class="form-label">Título</label>
@@ -148,7 +156,7 @@ try {
         </div>
     </div>
 
-    <!-- Modal para editar Portada -->
+    <!-- Modal para editar Portada (usa id=2) -->
     <div class="modal fade" id="editCoverModal" tabindex="-1" aria-labelledby="editCoverModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -157,8 +165,8 @@ try {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="guardar_portada.php" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="1">
+                    <form action="/php/guardar_portada.php" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="2">  <!-- Cambiado a 2 para guardar en la segunda fila -->
                         <div class="mb-3">
                             <label for="tituloCover" class="form-label">Título</label>
                             <input type="text" class="form-control" id="tituloCover" name="titulo" value="<?php echo isset($portada['titulo']) ? htmlspecialchars($portada['titulo']) : ''; ?>" required>

@@ -29,7 +29,9 @@ try {
             throw new Exception("Solo se permiten imágenes JPEG, PNG o GIF");
         }
 
-        $imagen_filename = uniqid() . '_' . basename($_FILES['imagen']['name']);
+        $original_name = basename($_FILES['imagen']['name']);
+        $safe_name = preg_replace('/\s+/', '_', $original_name);  // Reemplaza espacios con guiones bajos
+        $imagen_filename = uniqid() . '_' . $safe_name;
         $imagen_path = $target_dir . $imagen_filename;
         if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $imagen_path)) {
             throw new Exception("Error al subir la imagen");
@@ -88,7 +90,7 @@ try {
         $stmt->execute($params);
     }
 
-    header("Location: index_admin.php");  // Ajusta el nombre si es diferente
+    header("Location: /php/servicios/corte.php");  // Redirección absoluta de vuelta a corte.php (ajusta si es para index)
     exit;
 } catch (Exception $e) {
     echo "Error: " . htmlspecialchars($e->getMessage());

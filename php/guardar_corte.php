@@ -61,7 +61,7 @@ try {
         $stmt->execute($params);
     }
 
-    header("Location: servicios/corte.php");
+    header("Location: /php/servicios/corte.php");  // Redirección absoluta para mayor consistencia
     exit;
 } catch (Exception $e) {
     echo "Error: " . htmlspecialchars($e->getMessage());
