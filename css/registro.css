@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(to right, #1a2a44, #8b5e34);
+    background: linear-gradient(to right, #ad930f, #000000);
     font-family: Arial, sans-serif;
     overflow: hidden;
     transition: background 1s;
@@ -53,11 +53,11 @@ body {
 }
 #logoPanel {
     left: 0;
-    background: #1a2a44;
+    background: #000000;
 }
 #formPanel {
     left: 50%;
-    background: #8b5e34;
+    background: #ad930f;
 }
 .form-div {
     width: 100%;
@@ -104,4 +104,28 @@ body {
 .error-modal button {
     margin-top: 10px;
     padding: 5px 10px;
+}
+.success-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #d4edda;
+    color: #155724;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+.success-modal h3 {
+    color: #28a745;
+}
+.success-modal button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
 }

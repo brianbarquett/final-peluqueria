@@ -3,9 +3,8 @@ require_once 'conexion.php';
 
 try {
     // Obtener datos de la portada
-    $stmt = $pdo->prepare("SELECT * FROM portada WHERE id = 1");
-    $stmt->execute();
-    $portada = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmtPortada = $pdo->query("SELECT * FROM portada LIMIT 1");
+    $portada = $stmtPortada->fetch();
 
     // Obtener datos de los contenedores
     $stmt = $pdo->prepare("SELECT * FROM contenidos ORDER BY id ASC");
@@ -25,7 +24,7 @@ try {
     <title>Portada Responsiva con Contenedores</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/corte.css">
+    <link rel="stylesheet" href="/css/servicio.css">
 </head>
 <body>
     <!-- NAVBAR -->

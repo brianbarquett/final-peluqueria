@@ -28,7 +28,9 @@ try {
         if (!is_dir($target_dir)) {
             mkdir($target_dir, 0777, true);
         }
-        $imagen = $target_dir . uniqid() . '_' . basename($_FILES['imagen']['name']);
+        $original_name = basename($_FILES['imagen']['name']);
+        $safe_name = preg_replace('/\s+/', '_', $original_name);  // Reemplaza espacios con guiones bajos
+        $imagen = $target_dir . uniqid() . '_' . $safe_name;
         if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $imagen)) {
             throw new Exception("Error al subir la imagen");
         }
@@ -59,7 +61,7 @@ try {
         $stmt->execute($params);
     }
 
-    header("Location: index.php");
+    header("Location: servicios/corte.php");
     exit;
 } catch (Exception $e) {
     echo "Error: " . htmlspecialchars($e->getMessage());

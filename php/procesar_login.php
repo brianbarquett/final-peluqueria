@@ -3,9 +3,36 @@
 session_start();
 require_once "conexion.php";
 
+// Habilitar reporte de errores para desarrollo (quitar en producción)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $dni        = trim($_POST["dni"]);
-    $contrasena = $_POST["contrasena"];
+    // Obtener y sanitizar inputs
+    $dni        = trim($_POST["dni"] ?? '');
+    $contrasena = $_POST["contrasena"] ?? ''; // No trim para contraseñas
+
+    // Validaciones del lado del servidor
+    $errors = [];
+
+    if (empty($dni)) {
+        $errors[] = "El DNI es obligatorio.";
+    } elseif (!preg_match('/^\d{8}$/', $dni)) {
+        $errors[] = "El DNI debe tener exactamente 8 dígitos.";
+    }
+
+    if (empty($contrasena)) {
+        $errors[] = "La contraseña es obligatoria.";
+    } elseif (strlen($contrasena) < 6) {
+        $errors[] = "La contraseña debe tener al menos 6 caracteres.";
+    }
+
+    if (!empty($errors)) {
+        // Redirigir con errores (puedes usar session o query params para mostrarlos)
+        $_SESSION['errors'] = $errors; // Guardar errores en sesión
+        header("Location: ../html/registro.html?mode=login&error=validation");
+        exit;
+    }
 
     try {
         // Buscar usuario por DNI
@@ -33,11 +60,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         } else {
             // Redirigir con error para mostrar el modal
+            $_SESSION['errors'] = ["DNI o contraseña incorrectos."];
             header("Location: ../html/registro.html?mode=login&error=1");
             exit;
         }
     } catch (PDOException $e) {
-        echo "Error en el login: " . $e->getMessage();
+        // Loggear el error en lugar de mostrarlo (para producción)
+        error_log("Error en el login: " . $e->getMessage());
+        header("Location: ../html/registro.html?mode=login&error=server");
+        exit;
     }
+} else {
+    // Si no es POST, redirigir o mostrar error
+    header("Location: ../html/registro.html?mode=login");
+    exit;
 }
 ?>
