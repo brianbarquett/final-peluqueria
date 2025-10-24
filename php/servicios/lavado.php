@@ -19,7 +19,7 @@ if (isset($_GET['logout'])) {
 
 try {
     // Obtener datos de la portada (segunda fila: id=2 o la segunda disponible)
-    $stmtPortada = $pdo->query("SELECT * FROM portada ORDER BY id ASC LIMIT 1 OFFSET 1");
+    $stmtPortada = $pdo->query("SELECT * FROM lavado ORDER BY id ASC LIMIT 1 OFFSET 1");
     $portada = $stmtPortada->fetch();
 
     // Si no existe, usa valores predeterminados
@@ -32,7 +32,7 @@ try {
     }
 
     // Obtener datos de los contenedores (incluyendo precio)
-    $stmt = $pdo->prepare("SELECT * FROM tintura ORDER BY id ASC");
+    $stmt = $pdo->prepare("SELECT * FROM contenidos ORDER BY id ASC");
     $stmt->execute();
     $contenidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {

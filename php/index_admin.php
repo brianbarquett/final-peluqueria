@@ -1,6 +1,22 @@
-<?php require 'conexion.php'; ?>
-
 <?php
+session_start();
+require 'conexion.php';
+
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+if (!isset($_SESSION['idusuario']) || $_SESSION['rol'] !== 'admin') {
+    header("Location: index_principal.php");
+    exit;
+}
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: /html/registro.html?mode=login");
+    exit;
+}
+
 // Obtener los servicios desde la base de datos
 $stmt = $pdo->query("SELECT * FROM servicios");
 $servicios = [];
@@ -18,25 +34,27 @@ $portada = $stmtPortada->fetch();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BarberShop Gold Style</title>
+    <title>BarberShop Gold Style - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Ruta corregida al CSS -->
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">BarberShop Gold Style</a>
-            <div class="boton-nav">
-                <!-- Ruta corregida al login -->
-                <a href="../html/registro.html" class="btn btn-outline-light">Iniciar sesión</a>
+            <div class="boton-nav d-flex align-items-center">
+                <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Admin'); ?></span>
+                <img src="https://via.placeholder.com/40" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                <a href="config_admin.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
+                <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
             </div>
         </div>
     </nav>
 
     <!-- PORTADA -->
-    <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen'] ?? '') ?>');">  <!-- Ajustado: agrega 'uploads/' solo aquí, asumiendo que BD tiene solo filename -->
+    <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen'] ?? '') ?>');">
         <div class="portada-contenido">
             <h1><?= htmlspecialchars($portada['titulo'] ?? '') ?></h1>
             <div class="linea"></div>
@@ -63,13 +81,20 @@ $portada = $stmtPortada->fetch();
     <div class="container-fluid p-0">
         <div class="row g-0">
             <?php foreach ($servicios as $seccion => $servicio): ?>
+                <?php 
+                // Modificación para admin: Para section-1 (cortes), usar 'cortes_admin.php'
+                $link = str_replace('_publico.php', '.php', $servicio['link']);
+                if ($seccion === 'section-1') {
+                    $link = '../php/admin/cortes_admin.php';
+                }
+                ?>
                 <div class="col-<?= in_array($seccion, ['section-1', 'section-4', 'section-5']) ? '7' : '5' ?> p-0">
                     <div class="section <?= $seccion ?>" 
                          style="background-image: url('uploads/<?= htmlspecialchars($servicio['imagen']) ?>'); 
                                 background-size: cover; background-position: center; position: relative;">
 
                         <!-- Enlace invisible sobre toda la sección -->
-                        <a href="<?= htmlspecialchars($servicio['link']) ?>" 
+                        <a href="<?= htmlspecialchars($link) ?>" 
                            style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></a>
 
                         <!-- Contenido -->
@@ -101,9 +126,7 @@ $portada = $stmtPortada->fetch();
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <!-- Campo oculto para el ID -->
             <input type="hidden" name="id" id="portadaIdInput">
-            <!-- Campo oculto para mantener la imagen actual (solo filename) -->
             <input type="hidden" name="imagen_actual" id="portadaImagenActual">
               <div class="mb-3">
                   <label>Título</label>
@@ -115,7 +138,7 @@ $portada = $stmtPortada->fetch();
               </div>
               <div class="mb-3">
                   <label>Imagen actual</label><br>
-                  <small id="portadaRutaActual" class="text-muted"></small>  <!-- Agregado: muestra la ruta en texto para depuración -->
+                  <small id="portadaRutaActual" class="text-muted"></small>
                   <img id="portadaImagenPreview" src="" alt="Vista previa de la imagen" class="img-fluid mb-2" style="max-height: 150px;">
                   <input type="file" class="form-control" name="imagen">
               </div>
@@ -166,17 +189,17 @@ $portada = $stmtPortada->fetch();
             document.getElementById('seccionInput').value = seccion;
             document.getElementById('tituloInput').value = titulo;
             document.getElementById('descripcionInput').value = descripcion;
-            document.getElementById('imagenPreview').src = 'uploads/' + (imagen || '');  // Ajustado: agrega 'uploads/'
+            document.getElementById('imagenPreview').src = 'uploads/' + (imagen || '');
             new bootstrap.Modal(document.getElementById('modalEditar')).show();
         }
 
         function editarPortada(titulo, descripcion, imagen, id) {
             document.getElementById('portadaTituloInput').value = titulo;
             document.getElementById('portadaDescripcionInput').value = descripcion;
-            document.getElementById('portadaImagenPreview').src = imagen ? 'uploads/' + imagen : '';  // Ajustado: agrega 'uploads/' solo aquí
-            document.getElementById('portadaImagenActual').value = imagen || '';  // Mantiene solo filename
+            document.getElementById('portadaImagenPreview').src = imagen ? 'uploads/' + imagen : '';
+            document.getElementById('portadaImagenActual').value = imagen || '';
             document.getElementById('portadaIdInput').value = id;
-            document.getElementById('portadaRutaActual').innerText = imagen ? 'Ruta actual: uploads/' + imagen : 'No hay imagen actual';  // Agregado: muestra ruta en texto
+            document.getElementById('portadaRutaActual').innerText = imagen ? 'Ruta actual: uploads/' + imagen : 'No hay imagen actual';
             new bootstrap.Modal(document.getElementById('modalEditarPortada')).show();
         }
     </script>

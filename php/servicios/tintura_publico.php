@@ -1,21 +1,5 @@
 <?php
-session_start();
 require_once '../conexion.php';
-
-header("Cache-Control: no-cache, no-store, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
-
-if (!isset($_SESSION['idusuario']) || $_SESSION['rol'] !== 'cliente') {
-    header("Location: /php/index_principal.php");
-    exit;
-}
-
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: /html/registro.html?mode=login");
-    exit;
-}
 
 try {
     // Obtener datos de la portada (segunda fila: id=2 o la segunda disponible)
@@ -50,18 +34,14 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/servicio.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">BarberShop Gold Style</a>
-            <div class="boton-nav d-flex align-items-center">
-                <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
-                <img src="https://via.placeholder.com/40" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
-                <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
+            <div class="boton-nav">
+                <a href="../html/login.html" class="btn btn-outline-light">Iniciar sesión</a>
             </div>
         </div>
     </nav>

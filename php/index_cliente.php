@@ -1,4 +1,3 @@
-```php
 <?php
 session_start();
 require 'conexion.php';
@@ -37,7 +36,6 @@ $portada = $stmtPortada->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarberShop Gold Style</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Ruta corregida al CSS -->
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
@@ -74,13 +72,16 @@ $portada = $stmtPortada->fetch();
     <div class="container-fluid p-0">
         <div class="row g-0">
             <?php foreach ($servicios as $seccion => $servicio): ?>
+                <?php 
+                $link = str_replace('_publico.php', '.php', $servicio['link']);
+                ?>
                 <div class="col-<?= in_array($seccion, ['section-1', 'section-4', 'section-5']) ? '7' : '5' ?> p-0">
                     <div class="section <?= $seccion ?>" 
                          style="background-image: url('uploads/<?= htmlspecialchars($servicio['imagen']) ?>'); 
                                 background-size: cover; background-position: center; position: relative;">
 
                         <!-- Enlace invisible sobre toda la sección -->
-                        <a href="<?= htmlspecialchars($servicio['link']) ?>" 
+                        <a href="<?= htmlspecialchars($link) ?>" 
                            style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></a>
 
                         <!-- Contenido -->
@@ -99,4 +100,3 @@ $portada = $stmtPortada->fetch();
 
 </body>
 </html>
-```
