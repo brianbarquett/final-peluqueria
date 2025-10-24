@@ -54,13 +54,18 @@ $portada = $stmtPortada->fetch();
     <div class="container-fluid p-0">
         <div class="row g-0">
             <?php foreach ($servicios as $seccion => $servicio): ?>
+                <?php 
+                // Para no logueados, redirigir a servicios/{nombre}_publico.php
+                $base_name = str_replace('.php', '', $servicio['link']);
+                $link = 'servicios/' . $base_name . '_publico.php';
+                ?>
                 <div class="col-<?= in_array($seccion, ['section-1', 'section-4', 'section-5']) ? '7' : '5' ?> p-0">
                     <div class="section <?= $seccion ?>" 
                          style="background-image: url('uploads/<?= htmlspecialchars($servicio['imagen']) ?>'); 
                                 background-size: cover; background-position: center; position: relative;">
 
                         <!-- Enlace invisible sobre toda la sección -->
-                        <a href="<?= htmlspecialchars($servicio['link']) ?>" 
+                        <a href="<?= htmlspecialchars($link) ?>" 
                            style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></a>
 
                         <!-- Contenido -->

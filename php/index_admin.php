@@ -82,11 +82,9 @@ $portada = $stmtPortada->fetch();
         <div class="row g-0">
             <?php foreach ($servicios as $seccion => $servicio): ?>
                 <?php 
-                // Modificación para admin: Para section-1 (cortes), usar 'cortes_admin.php'
-                $link = str_replace('_publico.php', '.php', $servicio['link']);
-                if ($seccion === 'section-1') {
-                    $link = '../php/admin/cortes_admin.php';
-                }
+                // Para admins, redirigir a admin/{nombre}_admin.php
+                $base_name = str_replace('.php', '', $servicio['link']);
+                $link = 'admin/' . $base_name . '_admin.php';
                 ?>
                 <div class="col-<?= in_array($seccion, ['section-1', 'section-4', 'section-5']) ? '7' : '5' ?> p-0">
                     <div class="section <?= $seccion ?>" 
