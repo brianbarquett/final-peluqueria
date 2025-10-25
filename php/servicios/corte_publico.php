@@ -1,7 +1,18 @@
 <?php
 require_once '../conexion.php';
 
+$servicio = 'corte';  // Para este servicio
+
 try {
+    // Obtener intro desde BD
+    $stmtIntro = $pdo->prepare("SELECT * FROM intro_servicios WHERE servicio = :servicio LIMIT 1");
+    $stmtIntro->execute([':servicio' => $servicio]);
+    $intro = $stmtIntro->fetch();
+
+    if (!$intro) {
+        $intro = ['titulo' => 'Título Default', 'descripcion' => 'Descripción default.'];
+    }
+
     // Obtener datos de la portada (segunda fila: id=2 o la segunda disponible)
     $stmtPortada = $pdo->query("SELECT * FROM portada ORDER BY id ASC LIMIT 1 OFFSET 1");
     $portada = $stmtPortada->fetch();
@@ -24,7 +35,6 @@ try {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -58,6 +68,13 @@ try {
                 <i class="bi bi-chevron-down"></i>
                 <i class="bi bi-chevron-down"></i>
             </div>
+        </div>
+    </div>
+    <!-- Nuevo Contenedor Intro (sin editar) -->
+    <div class="intro-container">
+        <div class="intro-text">
+            <h2><?php echo htmlspecialchars($intro['titulo']); ?></h2>
+            <p><?php echo htmlspecialchars($intro['descripcion']); ?></p>
         </div>
     </div>
 

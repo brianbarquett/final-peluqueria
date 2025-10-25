@@ -39,7 +39,7 @@ try {
 
     if ($id === 0) {
         // Insertar nuevo contenedor
-        $stmt = $pdo->prepare("INSERT INTO contenidos (titulo, descripcion, precio, imagen) VALUES (:titulo, :descripcion, :precio, :imagen)");
+        $stmt = $pdo->prepare("INSERT INTO barba (titulo, descripcion, precio, imagen) VALUES (:titulo, :descripcion, :precio, :imagen)");
         $stmt->execute([
             ':titulo' => $titulo,
             ':descripcion' => $descripcion,
@@ -48,7 +48,7 @@ try {
         ]);
     } else {
         // Actualizar contenedor existente
-        $sql = "UPDATE contenidos SET titulo = :titulo, descripcion = :descripcion, precio = :precio";
+        $sql = "UPDATE barba SET titulo = :titulo, descripcion = :descripcion, precio = :precio";
         $params = [':titulo' => $titulo, ':descripcion' => $descripcion, ':precio' => $precio];
         
         if ($imagen) {
@@ -63,7 +63,7 @@ try {
         $stmt->execute($params);
     }
 
-    header("Location: admin/corte_admin.php");  // Redirige a la versión admin después de guardar
+    header("Location: admin/barba_admin.php");  // Redirige a la versión admin después de guardar
     exit;
 } catch (Exception $e) {
     echo "Error: " . htmlspecialchars($e->getMessage());

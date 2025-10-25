@@ -6,8 +6,8 @@ header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-if (!isset($_SESSION['idusuario']) || $_SESSION['rol'] !== 'cliente') {
-    header("Location: /php/index_principal.php");
+if (!isset($_SESSION['idusuario'])) {
+    header("Location: /php/servicios/lavado_publico.php");
     exit;
 }
 
@@ -17,9 +17,20 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
+$servicio = 'lavado';  // Para este servicio
+
 try {
+    // Obtener intro desde BD
+    $stmtIntro = $pdo->prepare("SELECT * FROM intro_servicios WHERE servicio = :servicio LIMIT 1");
+    $stmtIntro->execute([':servicio' => $servicio]);
+    $intro = $stmtIntro->fetch();
+
+    if (!$intro) {
+        $intro = ['titulo' => 'Título Default', 'descripcion' => 'Descripción default.'];
+    }
+
     // Obtener datos de la portada (segunda fila: id=2 o la segunda disponible)
-    $stmtPortada = $pdo->query("SELECT * FROM lavado ORDER BY id ASC LIMIT 1 OFFSET 1");
+    $stmtPortada = $pdo->query("SELECT * FROM portada ORDER BY id ASC LIMIT 1 OFFSET 1");
     $portada = $stmtPortada->fetch();
 
     // Si no existe, usa valores predeterminados
@@ -32,7 +43,7 @@ try {
     }
 
     // Obtener datos de los contenedores (incluyendo precio)
-    $stmt = $pdo->prepare("SELECT * FROM contenidos ORDER BY id ASC");
+    $stmt = $pdo->prepare("SELECT * FROM lavado ORDER BY id ASC");
     $stmt->execute();
     $contenidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
@@ -40,7 +51,6 @@ try {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -78,6 +88,13 @@ try {
                 <i class="bi bi-chevron-down"></i>
                 <i class="bi bi-chevron-down"></i>
             </div>
+        </div>
+    </div>
+    <!-- Nuevo Contenedor Intro (sin botón editar) -->
+    <div class="intro-container">
+        <div class="intro-text">
+            <h2><?php echo htmlspecialchars($intro['titulo']); ?></h2>
+            <p><?php echo htmlspecialchars($intro['descripcion']); ?></p>
         </div>
     </div>
 

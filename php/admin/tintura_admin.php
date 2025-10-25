@@ -17,7 +17,18 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
+$servicio = 'tintura';  // Para este archivo; cambiar en otros (ej: 'tintura')
+
 try {
+    // Obtener intro desde BD
+    $stmtIntro = $pdo->prepare("SELECT * FROM intro_servicios WHERE servicio = :servicio LIMIT 1");
+    $stmtIntro->execute([':servicio' => $servicio]);
+    $intro = $stmtIntro->fetch();
+
+    if (!$intro) {
+        $intro = ['id' => null, 'titulo' => 'Título Default', 'descripcion' => 'Descripción default.'];
+    }
+
     // Obtener datos de la portada (segunda fila: id=2 o la segunda disponible)
     $stmtPortada = $pdo->query("SELECT * FROM portada ORDER BY id ASC LIMIT 1 OFFSET 1");
     $portada = $stmtPortada->fetch();
@@ -32,7 +43,7 @@ try {
     }
 
     // Obtener datos de los contenedores (incluyendo precio)
-    $stmt = $pdo->prepare("SELECT * FROM tintura ORDER BY id ASC");
+    $stmt = $pdo->prepare("SELECT * FROM tintura ORDER BY id ASC");  // Cambiar tabla por servicio si aplica (ej: barba para barba_admin.php)
     $stmt->execute();
     $contenidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
@@ -82,6 +93,49 @@ try {
         </div>
     </div>
 
+    <!-- Nuevo Contenedor Intro (debajo de portada) -->
+    <div class="intro-container">
+        <div class="intro-text">
+            <h2><?php echo htmlspecialchars($intro['titulo']); ?></h2>
+            <p><?php echo htmlspecialchars($intro['descripcion']); ?></p>
+        </div>
+        <button class="btn btn-light edit-intro-btn" data-bs-toggle="modal" data-bs-target="#editIntroModal">Editar Intro</button>
+    </div>
+
+    <!-- Contenedores dinámicos (resto igual) -->
+    <?php foreach ($contenidos as $index => $contenido): ?>
+        <!-- ... (código de contenedores existente) ... -->
+    <?php endforeach; ?>
+
+    <!-- ... (botón agregar nuevo, modales existentes) ... -->
+
+    <!-- Nuevo Modal para Editar Intro -->
+    <div class="modal fade" id="editIntroModal" tabindex="-1" aria-labelledby="editIntroModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editIntroModalLabel">Editar Intro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/php/guardar_intro.php" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $intro['id']; ?>">
+                        <input type="hidden" name="servicio" value="<?php echo $servicio; ?>">
+                        <div class="mb-3">
+                            <label for="tituloIntro" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="tituloIntro" name="titulo" value="<?php echo htmlspecialchars($intro['titulo']); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcionIntro" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcionIntro" name="descripcion" required><?php echo htmlspecialchars($intro['descripcion']); ?></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Contenedores dinámicos -->
     <?php foreach ($contenidos as $index => $contenido): ?>
         <div class="content-section">
@@ -121,7 +175,7 @@ try {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/php/guardar_corte.php" method="POST" enctype="multipart/form-data">
+                        <form action="/php/guardar_tintura.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?php echo $contenido['id']; ?>">
                             <div class="mb-3">
                                 <label for="titulo<?php echo $contenido['id']; ?>" class="form-label">Título</label>
@@ -161,7 +215,7 @@ try {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/php/guardar_corte.php" method="POST" enctype="multipart/form-data">
+                    <form action="/php/guardar_tintura.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="0">
                         <div class="mb-3">
                             <label for="tituloNuevo" class="form-label">Título</label>

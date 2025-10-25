@@ -244,3 +244,79 @@
         font-size: 1.26rem; /* Ajuste intermedio reducido 30% */
     }
 }
+/* Nuevo contenedor intro */
+.intro-container {
+    height: 40vh;
+    background-color: #1E3A8A; /* Azul oscuro */
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    position: relative;
+}
+
+.intro-text {
+    max-width: 50%;
+    text-align: left;
+}
+
+.intro-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.intro-text h2::after {
+    content: '';
+    display: block;
+    width: 50px; /* Línea corta debajo del título */
+    height: 2px;
+    background-color: #FFD700; /* Amarillo dorado para barbería */
+    margin-top: 0.5rem;
+}
+
+.intro-text p {
+    font-size: 1.2rem;
+}
+
+.edit-intro-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 2;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .intro-container {
+        height: 50vh; /* Ajuste para móviles */
+        padding: 0 5%;
+    }
+
+    .intro-text {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .intro-text h2 {
+        font-size: 2rem;
+    }
+
+    .intro-text p {
+        font-size: 1rem;
+    }
+
+    .intro-text h2::after {
+        margin: 0.5rem auto; /* Centrar línea en móviles */
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .intro-text h2 {
+        font-size: 2.2rem;
+    }
+
+    .intro-text p {
+        font-size: 1.1rem;
+    }
+}
