@@ -59,7 +59,7 @@ $portada = $stmtPortada->fetch();
             <h1><?= htmlspecialchars($portada['titulo'] ?? '') ?></h1>
             <div class="linea"></div>
             <p><?= htmlspecialchars($portada['descripcion'] ?? '') ?></p>
-            <a href="sacar_turno.php" class="btn-transparente mt-3">Sacar turno</a><br>
+            <a href="/php/admin/turnos_admin.php" class="btn-transparente mt-3">Sacar turno</a><br>
             <button class="btn btn-warning mt-3"
                 onclick='editarPortada(
                     <?= json_encode($portada["titulo"] ?? '') ?>, 

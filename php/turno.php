@@ -27,10 +27,22 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a href="/php/index_cliente.php" class="btn btn-outline-light me-2">Volver al Inicio</a>
+            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <div class="d-flex align-items-center">
+                <span class="text-white me-2"><?php echo htmlspecialchars($user_name); ?></span>
+                <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
         <h1>Sacar Turnos</h1>
         <div class="days">
-            <!-- Días generados JS -->
+            <!-- Días -->
         </div>
         <div class="schedules">
             <!-- Horarios -->
@@ -55,7 +67,7 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
 
     <div id="overlay"></div>
 
-    <!-- Modal Confirmación (Pretty like image) -->
+    <!-- Modal Confirmación -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -113,6 +125,7 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
         let currentDateTime = null;
         let selectedCategoryKey = null;
         let selectedSubId = null;
+        let selectedSubName = '';
         let selectedPrice = 0;
 
         // Generar días
@@ -137,16 +150,59 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
 
         function loadSchedules(date) {
             schedulesContainer.innerHTML = '';
-            const times = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
-            times.forEach(time => {
-                const scheduleItem = document.createElement('div');
-                scheduleItem.classList.add('schedule-item');
-                scheduleItem.innerHTML = `
-                    <span>${time}</span>
-                    <button class="agendar-button" onclick="openModal('${date}', '${time}')">Agendar</button>
-                `;
-                schedulesContainer.appendChild(scheduleItem);
-            });
+            // Fetch config por día
+            fetch(`/php/fetch_config_por_dia.php?date=${date}`)
+                .then(response => response.json())
+                .then(config => {
+                    console.log('Config por día:', config);  // Debug
+                    if (config.error) {
+                        alert('Error cargando config: ' + config.error);
+                        return;
+                    }
+                    const times = generateTimes(config);
+                    console.log('Times generated:', times);  // Debug
+
+                    // Fetch disponibles
+                    fetch(`/php/fetch_horarios_disponibles.php?date=${date}`)
+                        .then(response => response.json())
+                        .then(disponibles => {
+                            console.log('Disponibles:', disponibles);  // Debug
+                            times.forEach(time => {
+                                const isDisponible = disponibles.includes(time);
+                                const scheduleItem = document.createElement('div');
+                                scheduleItem.classList.add('schedule-item');
+                                if (isDisponible) {
+                                    scheduleItem.innerHTML = `
+                                        <span>${time}</span>
+                                        <button class="agendar-button" onclick="openModal('${date}', '${time}')">Agendar</button>
+                                    `;
+                                } else {
+                                    scheduleItem.innerHTML = `
+                                        <span>${time}</span>
+                                        <button class="btn btn-danger disabled">Agotado</button>
+                                    `;
+                                }
+                                schedulesContainer.appendChild(scheduleItem);
+                            });
+                        }).catch(error => console.error('Error fetch disponibles:', error));
+                }).catch(error => console.error('Error fetch config:', error));
+        }
+
+        function generateTimes(config) {
+            const times = [];
+            let current = new Date(`2000-01-01 ${config.manana_inicio}`);
+            const manana_fin = new Date(`2000-01-01 ${config.manana_fin}`);
+            while (current < manana_fin) {
+                times.push(current.toTimeString().slice(0, 5));
+                current = new Date(current.getTime() + config.intervalo * 60000);
+            }
+            current = new Date(`2000-01-01 ${config.tarde_inicio}`);
+            const tarde_fin = new Date(`2000-01-01 ${config.tarde_fin}`);
+            while (current < tarde_fin) {
+                times.push(current.toTimeString().slice(0, 5));
+                current = new Date(current.getTime() + config.intervalo * 60000);
+            }
+            return times;
         }
 
         // Cambio categoría: Fetch subservicios
@@ -163,6 +219,7 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
                             option.value = srv.id;
                             option.textContent = `${srv.titulo || srv.name} - $${srv.precio}`;
                             option.dataset.price = srv.precio;
+                            option.dataset.name = srv.titulo || srv.name;
                             serviceSelect.appendChild(option);
                         });
                     });
@@ -185,12 +242,13 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
 
         confirmButton.addEventListener('click', () => {
             selectedSubId = serviceSelect.value;
+            selectedSubName = serviceSelect.selectedOptions[0].dataset.name;
             selectedPrice = serviceSelect.selectedOptions[0].dataset.price;
             if (selectedCategoryKey && selectedSubId) {
                 closeModal();
                 // Populate pretty modal
                 document.getElementById('userName').textContent = '<?php echo htmlspecialchars($user_name); ?>';
-                document.getElementById('turnoSubservicio').textContent = serviceSelect.selectedOptions[0].textContent.split(' - ')[0];
+                document.getElementById('turnoSubservicio').textContent = selectedSubName;
                 document.getElementById('turnoFecha').textContent = `${currentDateTime.date} ⏰ ${currentDateTime.time}`;
                 document.getElementById('turnoPrecio').textContent = `$${selectedPrice}`;
                 document.getElementById('senaAmount').textContent = (selectedPrice / 2).toFixed(2);
@@ -209,6 +267,7 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
                             category_key: selectedCategoryKey,
                             sub_table: selectedCategoryKey,
                             sub_id: selectedSubId,
+                            subservicio_name: selectedSubName,
                             sena: (selectedPrice / 2).toFixed(2)
                         })
                     }).then(response => response.json())
