@@ -52,7 +52,7 @@ try {
         <div class="container-fluid">
             <a class="navbar-brand" href="#">BarberShop Gold Style</a>
             <div class="boton-nav">
-                <a href="../html/login.html" class="btn btn-outline-light">Iniciar sesión</a>
+                <a href="/html/registro.html?mode=login" class="btn btn-outline-light">Iniciar sesión</a>
             </div>
         </div>
     </nav>

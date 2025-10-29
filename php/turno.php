@@ -11,6 +11,11 @@ if (!isset($_SESSION['idusuario'])) {
 $user_id = $_SESSION['idusuario'];
 $user_name = $_SESSION['nombre'];
 
+// Fetch foto
+$stmtFoto = $pdo->prepare("SELECT foto FROM usuarios WHERE idusuario = :id");
+$stmtFoto->execute([':id' => $user_id]);
+$user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
+
 // Cargar categorías de servicios BD
 $stmtCats = $pdo->query("SELECT * FROM servicios");
 $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
@@ -25,15 +30,22 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="/css/turno.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .day-button.selected {
+            background-color: #FFD700 !important;
+            color: #000000 !important;
+        }
+    </style>
 </head>
 <body>
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a href="/php/index_cliente.php" class="btn btn-outline-light me-2">Volver al Inicio</a>
+            <a href="/php/index_cliente.php" class="text-white me-3"><i class="bi bi-arrow-left fs-4"></i> Volver al Inicio</a>
             <a class="navbar-brand" href="#">BarberShop Gold Style</a>
-            <div class="d-flex align-items-center">
+            <div class="boton-nav d-flex align-items-center">
                 <span class="text-white me-2"><?php echo htmlspecialchars($user_name); ?></span>
+                <img src="<?php echo htmlspecialchars($user_foto); ?>" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                 <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
             </div>
         </div>

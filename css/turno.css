@@ -189,3 +189,23 @@ h1 {
         max-width: 90%;
     }
 }
+.day-button.selected {
+    background-color: #FFD700 !important;
+    color: #000000 !important;
+}
+/* ... (resto CSS anterior) ... */
+
+/* Dropdown style */
+.dropdown-menu {
+    background-color: #333;
+    color: #FFD700;
+}
+
+.dropdown-item {
+    color: #FFD700;
+}
+
+.dropdown-item:hover {
+    background-color: #FFD700;
+    color: #000;
+}

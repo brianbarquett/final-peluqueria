@@ -27,6 +27,12 @@ while ($row = $stmt->fetch()) {
 // Obtener los datos de la portada
 $stmtPortada = $pdo->query("SELECT * FROM portada LIMIT 1");
 $portada = $stmtPortada->fetch();
+
+// Fetch foto
+$user_id = $_SESSION['idusuario'];
+$stmtFoto = $pdo->prepare("SELECT foto FROM usuarios WHERE idusuario = :id");
+$stmtFoto->execute([':id' => $user_id]);
+$user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +52,12 @@ $portada = $stmtPortada->fetch();
             <a class="navbar-brand" href="#">BarberShop Gold Style</a>
             <div class="boton-nav d-flex align-items-center">
                 <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
-                <img src="https://via.placeholder.com/40" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                <div class="dropdown">
+                    <img src="uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle me-2 dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover;" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
+                    </ul>
+                </div>
                 <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
                 <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
             </div>
@@ -73,9 +84,7 @@ $portada = $stmtPortada->fetch();
         <div class="row g-0">
             <?php foreach ($servicios as $seccion => $servicio): ?>
                 <?php 
-                // Para clientes logueados, redirigir a servicios/{nombre}.php
-                $base_name = str_replace('.php', '', $servicio['link']);
-                $link = 'servicios/' . $base_name . '.php';
+                $link = str_replace('_publico.php', '.php', $servicio['link']);
                 ?>
                 <div class="col-<?= in_array($seccion, ['section-1', 'section-4', 'section-5']) ? '7' : '5' ?> p-0">
                     <div class="section <?= $seccion ?>" 
@@ -97,8 +106,28 @@ $portada = $stmtPortada->fetch();
         </div>
     </div>
 
+    <!-- Modal Cambiar Foto -->
+    <div class="modal fade" id="changePhotoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar Foto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="guardar_foto.php" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Selecciona Foto</label>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

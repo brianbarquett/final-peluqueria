@@ -50,6 +50,11 @@ try {
     echo "Error: " . htmlspecialchars($e->getMessage());
     exit;
 }
+// Fetch foto
+$user_id = $_SESSION['idusuario'];
+$stmtFoto = $pdo->prepare("SELECT foto FROM usuarios WHERE idusuario = :id");
+$stmtFoto->execute([':id' => $user_id]);
+$user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
 ?>
 
 <!DOCTYPE html>
@@ -65,17 +70,23 @@ try {
 </head>
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
-            <div class="boton-nav d-flex align-items-center">
-                <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
-                <img src="https://via.placeholder.com/40" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
-                <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
+   <nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+        <div class="boton-nav d-flex align-items-center">
+            <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
+            <!-- Dropdown para foto de perfil: envuelve img y ul en <div class="dropdown dropdown-center"> para centrado debajo de la foto -->
+            <div class="dropdown dropdown-center">
+                <img src="/php/uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover; cursor: pointer;" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
+                </ul>
             </div>
+            <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
+            <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
         </div>
-    </nav>
+    </div>
+</nav>
     <!-- Portada -->
     <div class="cover" style="background-image: url('/php/uploads/<?php echo isset($portada['imagen']) ? htmlspecialchars($portada['imagen']) : 'https://via.placeholder.com/1920x1080'; ?>');">
         <div class="cover-overlay"></div>
@@ -127,6 +138,25 @@ try {
             </div>
         </div>
     <?php endforeach; ?>
+    <div class="modal fade" id="changePhotoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cambiar Foto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/php/guardar_foto.php" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Selecciona Foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>

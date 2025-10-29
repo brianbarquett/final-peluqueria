@@ -40,9 +40,24 @@ $configs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-    <div class="container mt-5">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a href="index_admin.php" class="text-white me-3"><i class="bi bi-arrow-left fs-4"></i> Volver al Inicio</a>
+            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <div class="boton-nav d-flex align-items-center">
+                <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Admin'); ?></span>
+                <img src="https://via.placeholder.com/40" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                <a href="config_admin.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
+                <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
         <h2>Configuración de Horarios por Día</h2>
         <?php foreach ($configs as $config): ?>
             <form method="POST" class="mb-4">
@@ -71,7 +86,7 @@ $configs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <button type="submit" name="save_config" class="btn btn-primary">Guardar <?php echo ucfirst($config['dia_semana']); ?></button>
             </form>
         <?php endforeach; ?>
-        <button id="generateBtn" class="btn btn-success">Generar Horarios para Próximos Días</button>
+        <button id="generateBtn" class="btn btn-success">Generar Horarios Automáticamente</button>
     </div>
 
     <!-- Modal Éxito para Guardar -->
@@ -92,7 +107,7 @@ $configs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- Modal Éxito para Generar -->
+    <!-- Modal para Generar (éxito/error) -->
     <div class="modal fade" id="generateModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -101,7 +116,7 @@ $configs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="generateMessage">
-                    Horarios generados exitosamente.
+                    Procesando...
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -120,7 +135,7 @@ $configs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             fetch('/php/generate_horarios.php')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('generateMessage').textContent = data.message || 'Horarios generados!';
+                    document.getElementById('generateMessage').textContent = data.success ? data.message : 'Error: ' + data.error;
                     new bootstrap.Modal(document.getElementById('generateModal')).show();
                 }).catch(error => {
                     document.getElementById('generateMessage').textContent = 'Error al generar: ' + error;
