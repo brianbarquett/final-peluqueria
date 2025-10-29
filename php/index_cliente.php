@@ -70,7 +70,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
             <h1><?= htmlspecialchars($portada['titulo']) ?></h1>
             <div class="linea"></div>
             <p><?= htmlspecialchars($portada['descripcion']) ?></p>
-            <a href="sacar_turno.php" class="btn-transparente mt-3">Sacar turno</a><br>
+            <a href="turno.php" class="btn-transparente mt-3">Sacar turno</a><br>
             <div class="texto">Leer más</div>
             <div class="contenedor-flechas">
             <div class="flecha"></div>

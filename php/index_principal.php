@@ -57,7 +57,7 @@ $portada = $stmtPortada->fetch();
                 <?php 
                 // Para no logueados, redirigir a servicios/{nombre}_publico.php
                 $base_name = str_replace('.php', '', $servicio['link']);
-                $link = 'servicios/' . $base_name . '_publico.php';
+                $link = '' . $base_name . '_publico.php';
                 ?>
                 <div class="col-<?= in_array($seccion, ['section-1', 'section-4', 'section-5']) ? '7' : '5' ?> p-0">
                     <div class="section <?= $seccion ?>" 

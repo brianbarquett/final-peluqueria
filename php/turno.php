@@ -19,6 +19,12 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
 // Cargar categorías de servicios BD
 $stmtCats = $pdo->query("SELECT * FROM servicios");
 $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch foto
+$user_id = $_SESSION['idusuario'];
+$stmtFoto = $pdo->prepare("SELECT foto FROM usuarios WHERE idusuario = :id");
+$stmtFoto->execute([':id' => $user_id]);
+$user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
 ?>
 
 <!DOCTYPE html>
@@ -41,11 +47,16 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a href="/php/index_cliente.php" class="text-white me-3"><i class="bi bi-arrow-left fs-4"></i> Volver al Inicio</a>
             <a class="navbar-brand" href="#">BarberShop Gold Style</a>
             <div class="boton-nav d-flex align-items-center">
-                <span class="text-white me-2"><?php echo htmlspecialchars($user_name); ?></span>
-                <img src="<?php echo htmlspecialchars($user_foto); ?>" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
+                <div class="dropdown">
+                    <img src="uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle me-2 dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover;" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
+                    </ul>
+                </div>
+                <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
                 <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
             </div>
         </div>
@@ -119,6 +130,26 @@ $categories = $stmtCats->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="abonarSena" class="btn btn-primary w-100">ABONAR SEÑA ($<span id="senaAmount"></span>)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Cambiar Foto -->
+    <div class="modal fade" id="changePhotoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar Foto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="guardar_foto.php" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Selecciona Foto</label>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
                 </div>
             </div>
         </div>
