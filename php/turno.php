@@ -47,7 +47,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <a class="navbar-brand" href="index_cliente.php"><- Gold Style</a>
             <div class="boton-nav d-flex align-items-center">
                 <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
                 <div class="dropdown">
@@ -110,7 +110,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
                                 <i class="bi bi-person-circle"></i> <span id="userName"><?php echo htmlspecialchars($user_name); ?></span>
                             </div>
                             <div class="service-info">
-                                <i class="bi bi-scissors"></i> <span id="turnoSubservicio"></span> (45 min)
+                                <i class="bi bi-scissors"></i> <span id="turnoSubservicio"></span> (30 min)
                             </div>
                             <div class="date-info">
                                 <i class="bi bi-calendar-event"></i> <span id="turnoFecha"></span>

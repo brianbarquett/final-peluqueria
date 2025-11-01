@@ -47,22 +47,25 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
 </head>
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
-            <div class="boton-nav d-flex align-items-center">
-                <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
-                <div class="dropdown">
-                    <img src="uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle me-2 dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover;" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
-                    </ul>
-                </div>
-                <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
-                <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
+<nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+        <div class="boton-nav d-flex align-items-center">
+            <!-- AGREGADO: ÍCONO DE TURNOS -->
+            <a href="mis_turnos.php" class="text-white me-2"><i class="bi bi-calendar-check fs-4"></i></a>
+            <!-- FIN AGREGADO -->
+            <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
+            <div class="dropdown">
+                <img src="uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle me-2 dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover;" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
+                </ul>
             </div>
+            <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
+            <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- PORTADA -->
     <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen']) ?>');">
