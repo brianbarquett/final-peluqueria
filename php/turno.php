@@ -299,31 +299,33 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
                 confirmModal.show();
 
                 // Abonar Seña
-                document.getElementById('abonarSena').onclick = () => {
-                    fetch('/php/guardar_turno.php', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            user_id: <?php echo $user_id; ?>,
-                            date: currentDateTime.date,
-                            time: currentDateTime.time,
-                            category_key: selectedCategoryKey,
-                            sub_table: selectedCategoryKey,
-                            sub_id: selectedSubId,
-                            subservicio_name: selectedSubName,
-                            sena: (selectedPrice / 2).toFixed(2)
-                        })
-                    }).then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Turno reservado!');
-                            confirmModal.hide();
-                            loadSchedules(selectedDate);
-                        } else {
-                            alert('Error: ' + data.error);
-                        }
-                    });
-                };
+                // ... (resto del script igual)
+
+document.getElementById('abonarSena').onclick = () => {
+    fetch('crear_preferencia.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            user_id: <?php echo $user_id; ?>,
+            date: currentDateTime.date,
+            time: currentDateTime.time,
+            category_key: selectedCategoryKey,
+            sub_table: selectedCategoryKey,
+            sub_id: selectedSubId,
+            subservicio_name: selectedSubName,
+            sena: (selectedPrice / 2).toFixed(2)
+        })
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = data.init_point; // Redirigir a Mercado Pago
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+};
+
+// ... (resto del script)
             } else {
                 alert('Selecciona servicio y sub-servicio.');
             }

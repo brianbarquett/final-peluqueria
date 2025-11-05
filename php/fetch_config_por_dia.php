@@ -5,7 +5,7 @@ $date = filter_input(INPUT_GET, 'date', FILTER_SANITIZE_STRING);
 
 if ($date) {
     $weekday = strtolower(date('l', strtotime($date)));
-    $weekdays_map = ['monday' => 'lunes', 'tuesday' => 'martes', 'wednesday' => 'miercoles', 'thursday' => 'jueves', 'friday' => 'viernes', 'saturday' => 'sabado', 'sunday' => 'domingo'];
+    $weekdays_map = ['monday' => 'lunes', 'tuesday' => 'martes', 'wednesday' => 'miercoles', 'thursday' => 'jueves', 'friday' => 'viernes', 'saturday' => 'sabado'];
     $dia = $weekdays_map[$weekday] ?? '';
 
     if ($dia) {

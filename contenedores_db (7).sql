@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-10-2025 a las 20:26:02
+-- Tiempo de generación: 01-11-2025 a las 15:42:20
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -91,8 +91,7 @@ CREATE TABLE `contenidos` (
 INSERT INTO `contenidos` (`id`, `titulo`, `descripcion`, `imagen`, `precio`) VALUES
 (1, 'corte', 'cortesito pa', 'uploads/68f9ae61a8ef4_Espacios-pequenyos-mesas-comedor.jpg', 3500.00),
 (2, 'Taper feid', 'Alto corte pa turro mal', 'uploads/68f99e82aa3bb_corte_de_cabello.jpg', 8000.00),
-(3, 'corte americano', 're gringo amigo', 'uploads/68f99eb1ca720_corte-barba.jpg', 4000.00),
-(4, 'Platinado', 'facha', 'uploads/68fc008bb8369_platinado.jpg', 5000.00);
+(3, 'corte americano', 're gringo amigo', 'uploads/68f99eb1ca720_corte-barba.jpg', 4000.00);
 
 -- --------------------------------------------------------
 
@@ -172,7 +171,7 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (58, '2025-10-28', '19:30:00', 'si'),
 (59, '2025-10-28', '20:00:00', 'si'),
 (60, '2025-10-28', '20:30:00', 'si'),
-(61, '2025-10-29', '07:00:00', 'si'),
+(61, '2025-10-29', '07:00:00', 'no'),
 (62, '2025-10-29', '07:30:00', 'si'),
 (63, '2025-10-29', '08:00:00', 'si'),
 (64, '2025-10-29', '08:30:00', 'si'),
@@ -218,7 +217,7 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (104, '2025-10-31', '08:30:00', 'si'),
 (105, '2025-10-31', '09:00:00', 'si'),
 (106, '2025-10-31', '09:30:00', 'si'),
-(107, '2025-10-31', '10:00:00', 'si'),
+(107, '2025-10-31', '10:00:00', 'no'),
 (108, '2025-10-31', '10:30:00', 'si'),
 (109, '2025-10-31', '11:00:00', 'si'),
 (110, '2025-10-31', '11:30:00', 'si'),
@@ -248,12 +247,11 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (134, '2025-11-01', '17:30:00', 'si'),
 (135, '2025-11-01', '18:00:00', 'si'),
 (136, '2025-11-01', '18:30:00', 'si'),
-(137, '2025-11-01', '19:00:00', 'si'),
 (138, '2025-11-01', '19:30:00', 'si'),
 (139, '2025-11-01', '20:00:00', 'si'),
 (140, '2025-11-01', '20:30:00', 'si'),
 (261, '2025-11-02', '07:00:00', 'no'),
-(262, '2025-11-02', '07:30:00', 'si'),
+(262, '2025-11-02', '07:30:00', 'no'),
 (263, '2025-11-02', '08:00:00', 'si'),
 (264, '2025-11-02', '08:30:00', 'si'),
 (265, '2025-11-02', '09:00:00', 'si'),
@@ -293,7 +291,7 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (419, '2025-11-03', '20:00:00', 'si'),
 (420, '2025-11-03', '20:30:00', 'si'),
 (701, '2025-11-04', '07:00:00', 'si'),
-(702, '2025-11-04', '07:30:00', 'si'),
+(702, '2025-11-04', '07:30:00', 'no'),
 (703, '2025-11-04', '08:00:00', 'si'),
 (704, '2025-11-04', '08:30:00', 'si'),
 (705, '2025-11-04', '09:00:00', 'si'),
@@ -311,7 +309,67 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (717, '2025-11-04', '19:00:00', 'si'),
 (718, '2025-11-04', '19:30:00', 'si'),
 (719, '2025-11-04', '20:00:00', 'si'),
-(720, '2025-11-04', '20:30:00', 'si');
+(720, '2025-11-04', '20:30:00', 'si'),
+(721, '2025-11-05', '07:00:00', 'si'),
+(722, '2025-11-05', '07:30:00', 'si'),
+(723, '2025-11-05', '08:00:00', 'si'),
+(724, '2025-11-05', '08:30:00', 'si'),
+(725, '2025-11-05', '09:00:00', 'si'),
+(726, '2025-11-05', '09:30:00', 'si'),
+(727, '2025-11-05', '10:00:00', 'si'),
+(728, '2025-11-05', '10:30:00', 'si'),
+(729, '2025-11-05', '11:00:00', 'si'),
+(730, '2025-11-05', '11:30:00', 'si'),
+(731, '2025-11-05', '16:00:00', 'si'),
+(732, '2025-11-05', '16:30:00', 'si'),
+(733, '2025-11-05', '17:00:00', 'si'),
+(734, '2025-11-05', '17:30:00', 'si'),
+(735, '2025-11-05', '18:00:00', 'si'),
+(736, '2025-11-05', '18:30:00', 'si'),
+(737, '2025-11-05', '19:00:00', 'si'),
+(738, '2025-11-05', '19:30:00', 'si'),
+(739, '2025-11-05', '20:00:00', 'si'),
+(740, '2025-11-05', '20:30:00', 'si'),
+(841, '2025-11-06', '07:00:00', 'si'),
+(842, '2025-11-06', '07:30:00', 'si'),
+(843, '2025-11-06', '08:00:00', 'si'),
+(844, '2025-11-06', '08:30:00', 'si'),
+(845, '2025-11-06', '09:00:00', 'si'),
+(846, '2025-11-06', '09:30:00', 'si'),
+(847, '2025-11-06', '10:00:00', 'si'),
+(848, '2025-11-06', '10:30:00', 'si'),
+(849, '2025-11-06', '11:00:00', 'si'),
+(850, '2025-11-06', '11:30:00', 'si'),
+(851, '2025-11-06', '16:00:00', 'si'),
+(852, '2025-11-06', '16:30:00', 'si'),
+(853, '2025-11-06', '17:00:00', 'si'),
+(854, '2025-11-06', '17:30:00', 'si'),
+(855, '2025-11-06', '18:00:00', 'si'),
+(856, '2025-11-06', '18:30:00', 'si'),
+(857, '2025-11-06', '19:00:00', 'si'),
+(858, '2025-11-06', '19:30:00', 'si'),
+(859, '2025-11-06', '20:00:00', 'si'),
+(860, '2025-11-06', '20:30:00', 'si'),
+(981, '2025-11-07', '07:00:00', 'si'),
+(982, '2025-11-07', '07:30:00', 'si'),
+(983, '2025-11-07', '08:00:00', 'si'),
+(984, '2025-11-07', '08:30:00', 'si'),
+(985, '2025-11-07', '09:00:00', 'si'),
+(986, '2025-11-07', '09:30:00', 'si'),
+(987, '2025-11-07', '10:00:00', 'si'),
+(988, '2025-11-07', '10:30:00', 'si'),
+(989, '2025-11-07', '11:00:00', 'si'),
+(990, '2025-11-07', '11:30:00', 'si'),
+(991, '2025-11-07', '16:00:00', 'si'),
+(992, '2025-11-07', '16:30:00', 'si'),
+(993, '2025-11-07', '17:00:00', 'si'),
+(994, '2025-11-07', '17:30:00', 'si'),
+(995, '2025-11-07', '18:00:00', 'si'),
+(996, '2025-11-07', '18:30:00', 'si'),
+(997, '2025-11-07', '19:00:00', 'si'),
+(998, '2025-11-07', '19:30:00', 'si'),
+(999, '2025-11-07', '20:00:00', 'si'),
+(1000, '2025-11-07', '20:30:00', 'si');
 
 -- --------------------------------------------------------
 
@@ -436,7 +494,12 @@ INSERT INTO `reservas` (`id_reserva`, `id_usuario`, `fecha`, `hora`, `category_k
 (4, 2, '2025-10-26', '07:00:00', 'corte', 'corte', 2000.00, 'pendiente', 3, 'corte americano'),
 (6, 2, '2025-10-27', '07:00:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid'),
 (7, 2, '2025-10-28', '07:30:00', 'tintura', 'tintura', 2500.00, 'pendiente', 0, 'Platinado'),
-(8, 2, '2025-11-02', '07:00:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid');
+(8, 2, '2025-11-02', '07:00:00', 'corte', 'corte', 4000.00, 'cancelado', 2, 'Taper feid'),
+(9, 3, '2025-10-29', '07:00:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid'),
+(10, 2, '2025-11-04', '07:30:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid'),
+(11, 5, '2025-10-31', '10:00:00', 'corte', 'corte', 1750.00, 'pendiente', 1, 'corte'),
+(12, 5, '2025-11-01', '19:00:00', 'corte', 'corte', 2000.00, 'pendiente', 3, 'corte americano'),
+(13, 2, '2025-11-02', '07:30:00', 'corte', 'corte', 1750.00, 'pendiente', 1, 'corte');
 
 -- --------------------------------------------------------
 
@@ -462,7 +525,7 @@ INSERT INTO `servicios` (`id`, `seccion`, `titulo`, `descripcion`, `imagen`, `li
 (2, 'section-2', 'Tintura', 'Colores vibrantes y personalizados para realzar tu look.', 'section-2_1761108971.jpg', 'servicios/tintura.php'),
 (3, 'section-3', 'Peinado', 'Peinados elegantes para cualquier ocasión especial.', 'section-3_1761109311.jpg', 'servicios/peinado.php'),
 (4, 'section-4', 'Barba', 'Afeitado y diseño de barba profesional.', 'section-4_1761108991.jpg', 'servicios/barba.php'),
-(5, 'section-5', 'Lavados', 'Lavado de cabello.', 'section-5_1761109211.jpg', 'servicios/tratamientos.php');
+(5, 'section-5', 'Lavados', 'Lavado de cabello.', 'section-5_1761109211.jpg', 'servicios/lavado.php');
 
 -- --------------------------------------------------------
 
@@ -510,7 +573,9 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`idusuario`, `nombre`, `dni`, `edad`, `telefono`, `contrasena`, `correo`, `rol`, `foto`) VALUES
 (1, 'brian', '44982569', 22, '3704597493', '123456', 'brian@gmail.com', 'admin', ''),
 (2, 'brian', '44555666', 22, '3704597493', '$2y$10$WQdMrI5RCOdyqQ/G3t/4CeVxiNjtJz56o8UYwFk3KN4ZLtJfEXify', 'brian1@gmail.com', 'admin', '6901978d8cf09_brian_perfil.jpg'),
-(3, 'dalila', '43807979', 24, '3704121212', '$2y$10$1GblGIiiiNW.bgGmr1ezqumkYKi7haYthNZv/3tlGKeeoHpFZKCLG', 'dali@gmail.com', 'cliente', '69022a7ae7168_brian_2.jpg');
+(3, 'dalila', '43807979', 24, '3704121212', '$2y$10$1GblGIiiiNW.bgGmr1ezqumkYKi7haYthNZv/3tlGKeeoHpFZKCLG', 'dali@gmail.com', 'cliente', '69022a7ae7168_brian_2.jpg'),
+(4, 'Goku fase 4', '22333444', 21, '3704597493', '$2y$10$mOgn2PYXCwFetUpiLv4cwOznaLJBgBdTsZrL/GrnBSKDo.RkM3VwK', 'goku@gmail.com', 'cliente', NULL),
+(5, 'Goku Fase 4', '11222333', 21, '3704545454', '$2y$10$Ue8jF.rkOJYOqdTUCeaKI.S0fUvnYIC1pNSTF6kI1n7k2uxaK/TJG', 'goku1@gmail.com', 'cliente', '6903f478ab3ca_brian_perfil.jpg');
 
 --
 -- Índices para tablas volcadas
@@ -591,7 +656,7 @@ ALTER TABLE `contenidos`
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=721;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1003;
 
 --
 -- AUTO_INCREMENT de la tabla `intro_servicios`
@@ -615,7 +680,7 @@ ALTER TABLE `portada`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios`
@@ -627,7 +692,7 @@ ALTER TABLE `servicios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
