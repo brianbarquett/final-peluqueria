@@ -73,7 +73,7 @@
             file_put_contents($log_file, date('Y-m-d H:i:s') . " - Payment: " . json_encode($payment) . PHP_EOL, FILE_APPEND);
 
             if ($payment && $payment->status === 'approved') {
-                // Parsear external_reference
+                // Parsear external_reference (ignoramos $sub_table ya que no se usa más)
                 $external_parts = explode('|', $payment->external_reference);
                 if (count($external_parts) !== 8) {
                     file_put_contents($log_file, date('Y-m-d H:i:s') . " - Error: External reference inválido" . PHP_EOL, FILE_APPEND);
@@ -88,20 +88,23 @@
                     $disponible = $stmtCheck->fetchColumn();
 
                     if ($disponible === 'si') {
-                        // Insertar reserva con status 'confirmado' y sena_pagada = monto pagado real
+                        // Insertar reserva con status 'confirmado', sena_pagada = monto pagado real, y met_pago = método de pago
                         $sena_pagada = $payment->transaction_amount;
+                        $met_pago = $payment->payment_type_id ?? 'unknown'; // Usar payment_type_id; fallback a 'unknown' si es NULL (quítalo si la columna permite NULL)
+                        file_put_contents($log_file, date('Y-m-d H:i:s') . " - Método de pago: " . $met_pago . PHP_EOL, FILE_APPEND);
+
                         $stmtInsert = $pdo->prepare("
                             INSERT INTO reservas 
-                            (id_usuario, fecha, hora, category_key, sub_table, sub_id, subservicio_name, sena_pagada, status, payment_id) 
+                            (id_usuario, fecha, hora, category_key, met_pago, sub_id, subservicio_name, sena_pagada, status, payment_id) 
                             VALUES 
-                            (:user_id, :fecha, :hora, :category_key, :sub_table, :sub_id, :subservicio_name, :sena_pagada, 'confirmado', :payment_id)
+                            (:user_id, :fecha, :hora, :category_key, :met_pago, :sub_id, :subservicio_name, :sena_pagada, 'pendiente', :payment_id)
                         ");
                         $stmtInsert->execute([
                             ':user_id' => $user_id,
                             ':fecha' => $fecha,
                             ':hora' => $hora,
                             ':category_key' => $category_key,
-                            ':sub_table' => $sub_table,  // Asumiendo que esto es la 'categoria' en algunos inserts
+                            ':met_pago' => $met_pago,
                             ':sub_id' => $sub_id,
                             ':subservicio_name' => $subservicio_name,
                             ':sena_pagada' => $sena_pagada,

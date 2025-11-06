@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-11-2025 a las 15:42:20
+-- Tiempo de generación: 06-11-2025 a las 05:48:01
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -62,7 +62,6 @@ CREATE TABLE `config_atencion` (
 --
 
 INSERT INTO `config_atencion` (`dia_semana`, `manana_inicio`, `manana_fin`, `tarde_inicio`, `tarde_fin`, `intervalo`) VALUES
-('domingo', '07:00:00', '12:00:00', '16:00:00', '21:00:00', 30),
 ('jueves', '07:00:00', '12:00:00', '16:00:00', '21:00:00', 30),
 ('lunes', '07:00:00', '12:00:00', '16:00:00', '21:00:00', 30),
 ('martes', '07:00:00', '12:00:00', '16:00:00', '21:00:00', 30),
@@ -89,7 +88,7 @@ CREATE TABLE `contenidos` (
 --
 
 INSERT INTO `contenidos` (`id`, `titulo`, `descripcion`, `imagen`, `precio`) VALUES
-(1, 'corte', 'cortesito pa', 'uploads/68f9ae61a8ef4_Espacios-pequenyos-mesas-comedor.jpg', 3500.00),
+(1, 'corte', 'cortesito pa', 'uploads/68f9ae61a8ef4_Espacios-pequenyos-mesas-comedor.jpg', 150.00),
 (2, 'Taper feid', 'Alto corte pa turro mal', 'uploads/68f99e82aa3bb_corte_de_cabello.jpg', 8000.00),
 (3, 'corte americano', 're gringo amigo', 'uploads/68f99eb1ca720_corte-barba.jpg', 4000.00);
 
@@ -252,25 +251,25 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (140, '2025-11-01', '20:30:00', 'si'),
 (261, '2025-11-02', '07:00:00', 'no'),
 (262, '2025-11-02', '07:30:00', 'no'),
-(263, '2025-11-02', '08:00:00', 'si'),
-(264, '2025-11-02', '08:30:00', 'si'),
+(263, '2025-11-02', '08:00:00', 'no'),
+(264, '2025-11-02', '08:30:00', 'no'),
 (265, '2025-11-02', '09:00:00', 'si'),
-(266, '2025-11-02', '09:30:00', 'si'),
-(267, '2025-11-02', '10:00:00', 'si'),
+(266, '2025-11-02', '09:30:00', 'no'),
+(267, '2025-11-02', '10:00:00', 'no'),
 (268, '2025-11-02', '10:30:00', 'si'),
 (269, '2025-11-02', '11:00:00', 'si'),
-(270, '2025-11-02', '11:30:00', 'si'),
+(270, '2025-11-02', '11:30:00', 'no'),
 (271, '2025-11-02', '16:00:00', 'si'),
 (272, '2025-11-02', '16:30:00', 'si'),
 (273, '2025-11-02', '17:00:00', 'si'),
 (274, '2025-11-02', '17:30:00', 'si'),
 (275, '2025-11-02', '18:00:00', 'si'),
-(276, '2025-11-02', '18:30:00', 'si'),
+(276, '2025-11-02', '18:30:00', 'no'),
 (277, '2025-11-02', '19:00:00', 'si'),
 (278, '2025-11-02', '19:30:00', 'si'),
-(279, '2025-11-02', '20:00:00', 'si'),
-(280, '2025-11-02', '20:30:00', 'si'),
-(401, '2025-11-03', '07:00:00', 'si'),
+(279, '2025-11-02', '20:00:00', 'no'),
+(280, '2025-11-02', '20:30:00', 'no'),
+(401, '2025-11-03', '07:00:00', 'no'),
 (402, '2025-11-03', '07:30:00', 'si'),
 (403, '2025-11-03', '08:00:00', 'si'),
 (404, '2025-11-03', '08:30:00', 'si'),
@@ -312,27 +311,27 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (720, '2025-11-04', '20:30:00', 'si'),
 (721, '2025-11-05', '07:00:00', 'si'),
 (722, '2025-11-05', '07:30:00', 'si'),
-(723, '2025-11-05', '08:00:00', 'si'),
-(724, '2025-11-05', '08:30:00', 'si'),
+(723, '2025-11-05', '08:00:00', 'no'),
+(724, '2025-11-05', '08:30:00', 'no'),
 (725, '2025-11-05', '09:00:00', 'si'),
 (726, '2025-11-05', '09:30:00', 'si'),
-(727, '2025-11-05', '10:00:00', 'si'),
+(727, '2025-11-05', '10:00:00', 'no'),
 (728, '2025-11-05', '10:30:00', 'si'),
 (729, '2025-11-05', '11:00:00', 'si'),
 (730, '2025-11-05', '11:30:00', 'si'),
 (731, '2025-11-05', '16:00:00', 'si'),
-(732, '2025-11-05', '16:30:00', 'si'),
+(732, '2025-11-05', '16:30:00', 'no'),
 (733, '2025-11-05', '17:00:00', 'si'),
 (734, '2025-11-05', '17:30:00', 'si'),
 (735, '2025-11-05', '18:00:00', 'si'),
 (736, '2025-11-05', '18:30:00', 'si'),
 (737, '2025-11-05', '19:00:00', 'si'),
 (738, '2025-11-05', '19:30:00', 'si'),
-(739, '2025-11-05', '20:00:00', 'si'),
-(740, '2025-11-05', '20:30:00', 'si'),
+(739, '2025-11-05', '20:00:00', 'no'),
+(740, '2025-11-05', '20:30:00', 'no'),
 (841, '2025-11-06', '07:00:00', 'si'),
-(842, '2025-11-06', '07:30:00', 'si'),
-(843, '2025-11-06', '08:00:00', 'si'),
+(842, '2025-11-06', '07:30:00', 'no'),
+(843, '2025-11-06', '08:00:00', 'no'),
 (844, '2025-11-06', '08:30:00', 'si'),
 (845, '2025-11-06', '09:00:00', 'si'),
 (846, '2025-11-06', '09:30:00', 'si'),
@@ -369,7 +368,47 @@ INSERT INTO `horarios` (`id`, `fecha`, `hora`, `disponible`) VALUES
 (997, '2025-11-07', '19:00:00', 'si'),
 (998, '2025-11-07', '19:30:00', 'si'),
 (999, '2025-11-07', '20:00:00', 'si'),
-(1000, '2025-11-07', '20:30:00', 'si');
+(1000, '2025-11-07', '20:30:00', 'si'),
+(1003, '2025-11-09', '07:00:00', 'si'),
+(1004, '2025-11-09', '07:30:00', 'si'),
+(1005, '2025-11-09', '08:00:00', 'si'),
+(1006, '2025-11-09', '08:30:00', 'no'),
+(1007, '2025-11-09', '09:00:00', 'si'),
+(1008, '2025-11-09', '09:30:00', 'si'),
+(1009, '2025-11-09', '10:00:00', 'si'),
+(1010, '2025-11-09', '10:30:00', 'si'),
+(1011, '2025-11-09', '11:00:00', 'si'),
+(1012, '2025-11-09', '11:30:00', 'si'),
+(1013, '2025-11-09', '16:00:00', 'si'),
+(1014, '2025-11-09', '16:30:00', 'si'),
+(1015, '2025-11-09', '17:00:00', 'si'),
+(1016, '2025-11-09', '17:30:00', 'si'),
+(1017, '2025-11-09', '18:00:00', 'si'),
+(1018, '2025-11-09', '18:30:00', 'si'),
+(1019, '2025-11-09', '19:00:00', 'si'),
+(1020, '2025-11-09', '19:30:00', 'si'),
+(1021, '2025-11-09', '20:00:00', 'si'),
+(1022, '2025-11-09', '20:30:00', 'si'),
+(1023, '2025-11-08', '07:00:00', 'si'),
+(1024, '2025-11-08', '07:30:00', 'si'),
+(1025, '2025-11-08', '08:00:00', 'si'),
+(1026, '2025-11-08', '08:30:00', 'si'),
+(1027, '2025-11-08', '09:00:00', 'si'),
+(1028, '2025-11-08', '09:30:00', 'si'),
+(1029, '2025-11-08', '10:00:00', 'si'),
+(1030, '2025-11-08', '10:30:00', 'si'),
+(1031, '2025-11-08', '11:00:00', 'si'),
+(1032, '2025-11-08', '11:30:00', 'si'),
+(1033, '2025-11-08', '16:00:00', 'no'),
+(1034, '2025-11-08', '16:30:00', 'si'),
+(1035, '2025-11-08', '17:00:00', 'si'),
+(1036, '2025-11-08', '17:30:00', 'si'),
+(1037, '2025-11-08', '18:00:00', 'si'),
+(1038, '2025-11-08', '18:30:00', 'si'),
+(1039, '2025-11-08', '19:00:00', 'si'),
+(1040, '2025-11-08', '19:30:00', 'si'),
+(1041, '2025-11-08', '20:00:00', 'si'),
+(1042, '2025-11-08', '20:30:00', 'si');
 
 -- --------------------------------------------------------
 
@@ -477,29 +516,23 @@ CREATE TABLE `reservas` (
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `category_key` varchar(50) NOT NULL,
-  `sub_table` varchar(50) NOT NULL,
+  `met_pago` varchar(255) NOT NULL,
   `sena_pagada` decimal(10,2) DEFAULT 0.00,
   `status` varchar(50) DEFAULT 'pendiente',
   `sub_id` int(11) NOT NULL,
-  `subservicio_name` varchar(255) NOT NULL DEFAULT ''
+  `subservicio_name` varchar(255) NOT NULL DEFAULT '',
+  `payment_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `reservas`
 --
 
-INSERT INTO `reservas` (`id_reserva`, `id_usuario`, `fecha`, `hora`, `category_key`, `sub_table`, `sena_pagada`, `status`, `sub_id`, `subservicio_name`) VALUES
-(1, 2, '2025-10-26', '09:00:00', 'corte', 'corte', 4000.00, 'ocupado', 2, ''),
-(3, 2, '2025-10-26', '10:00:00', 'corte', 'corte', 4000.00, 'cancelado', 2, ''),
-(4, 2, '2025-10-26', '07:00:00', 'corte', 'corte', 2000.00, 'pendiente', 3, 'corte americano'),
-(6, 2, '2025-10-27', '07:00:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid'),
-(7, 2, '2025-10-28', '07:30:00', 'tintura', 'tintura', 2500.00, 'pendiente', 0, 'Platinado'),
-(8, 2, '2025-11-02', '07:00:00', 'corte', 'corte', 4000.00, 'cancelado', 2, 'Taper feid'),
-(9, 3, '2025-10-29', '07:00:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid'),
-(10, 2, '2025-11-04', '07:30:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid'),
-(11, 5, '2025-10-31', '10:00:00', 'corte', 'corte', 1750.00, 'pendiente', 1, 'corte'),
-(12, 5, '2025-11-01', '19:00:00', 'corte', 'corte', 2000.00, 'pendiente', 3, 'corte americano'),
-(13, 2, '2025-11-02', '07:30:00', 'corte', 'corte', 1750.00, 'pendiente', 1, 'corte');
+INSERT INTO `reservas` (`id_reserva`, `id_usuario`, `fecha`, `hora`, `category_key`, `met_pago`, `sena_pagada`, `status`, `sub_id`, `subservicio_name`, `payment_id`) VALUES
+(1, 2, '2025-10-26', '09:00:00', 'corte', 'corte', 4000.00, 'ocupado', 2, '', NULL),
+(3, 2, '2025-10-26', '10:00:00', 'corte', 'corte', 4000.00, 'cancelado', 2, '', NULL),
+(4, 2, '2025-10-26', '07:00:00', 'corte', 'corte', 2000.00, 'pendiente', 3, 'corte americano', NULL),
+(6, 2, '2025-10-27', '07:00:00', 'corte', 'corte', 4000.00, 'pendiente', 2, 'Taper feid', NULL);
 
 -- --------------------------------------------------------
 
@@ -598,7 +631,8 @@ ALTER TABLE `contenidos`
 --
 ALTER TABLE `horarios`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_horario` (`fecha`,`hora`);
+  ADD UNIQUE KEY `unique_horario` (`fecha`,`hora`),
+  ADD KEY `idx_fecha_hora` (`fecha`,`hora`);
 
 --
 -- Indices de la tabla `intro_servicios`
@@ -625,7 +659,10 @@ ALTER TABLE `portada`
 ALTER TABLE `reservas`
   ADD PRIMARY KEY (`id_reserva`),
   ADD UNIQUE KEY `unique_reserva` (`fecha`,`hora`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `idx_payment_id` (`payment_id`),
+  ADD KEY `idx_status` (`status`),
+  ADD KEY `idx_fecha` (`fecha`);
 
 --
 -- Indices de la tabla `servicios`
@@ -656,7 +693,7 @@ ALTER TABLE `contenidos`
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1003;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1163;
 
 --
 -- AUTO_INCREMENT de la tabla `intro_servicios`
@@ -680,7 +717,7 @@ ALTER TABLE `portada`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios`
