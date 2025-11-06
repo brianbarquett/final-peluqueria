@@ -13,6 +13,14 @@ $item->unit_price = 150.00;
 $item->currency_id = 'ARS';
 
 $preference->items = array($item);
+
+$preference->back_urls = array (
+    "success" => "http://localhost:3000/php/mis_turnos.php",
+    "failure" => "http://localhost:3000/php/turno.php"
+);
+
+
+
 $preference->save();
 
 ?>

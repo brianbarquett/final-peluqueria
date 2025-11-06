@@ -1,19 +1,15 @@
 <?php
 // crear_preferencia.php
-// Este script crea una preferencia de pago en Mercado Pago basada en los datos recibidos del frontend (turno.php).
-// Adaptado de mercado_pago.php, pero dinámico con los datos del subservicio y la seña.
-// También inserta la reserva en la base de datos con status 'pendiente'.
-// Después del pago exitoso en Mercado Pago, necesitarías un webhook o callback para actualizar el status a 'confirmado' o similar,
-// pero eso no está implementado aquí (puedes agregar un notification_url en la preferencia).
+// Crea preferencia de pago sin insertar reserva en DB hasta confirmación en capturar.php.
 
-header('Content-Type: application/json'); // Responder en JSON
+header('Content-Type: application/json');
 
-require __DIR__ . '/../vendor/autoload.php'; // Asegúrate de que la ruta al autoload sea correcta
-require __DIR__ . '/../php/conexion.php'; // Incluir la conexión a la DB (ajusta la ruta si es necesario)
+require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../php/conexion.php';
 
-MercadoPago\SDK::setAccessToken('APP_USR-1969609096585871-110110-c92e7e04539d841305e3b9b96f45732b-2959473413'); // Tu access token
+MercadoPago\SDK::setAccessToken('APP_USR-2122609768538338-110110-699cf51ac71548b571a1d3f298b66992-283482986');
 
-// Recibir datos del frontend via POST (JSON)
+// Recibir datos del frontend
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!$data || empty($data['user_id']) || empty($data['date']) || empty($data['time']) || empty($data['category_key']) || empty($data['sub_table']) || empty($data['sub_id']) || empty($data['subservicio_name']) || empty($data['sena'])) {
@@ -21,7 +17,7 @@ if (!$data || empty($data['user_id']) || empty($data['date']) || empty($data['ti
     exit;
 }
 
-// Validar si el horario está disponible (para evitar reservas duplicadas)
+// Validar horario disponible
 $stmtCheck = $pdo->prepare("SELECT disponible FROM horarios WHERE fecha = :fecha AND hora = :hora");
 $stmtCheck->execute([':fecha' => $data['date'], ':hora' => $data['time']]);
 $disponible = $stmtCheck->fetchColumn();
@@ -31,20 +27,38 @@ if ($disponible !== 'si') {
     exit;
 }
 
-// Crear la preferencia de Mercado Pago
+// Crear preferencia
 $preference = new MercadoPago\Preference();
 
 $item = new MercadoPago\Item();
-$item->id = 'turno_' . $data['sub_id']; // ID único basado en el subservicio
-$item->title = $data['subservicio_name'] . ' (Seña)'; // Título del item: subservicio + indicación de seña
+$item->id = 'turno_' . $data['sub_id'];
+$item->title = $data['subservicio_name'] . ' (Seña)';
 $item->quantity = 1;
-$item->unit_price = (float) $data['sena']; // Monto de la seña (mitad del precio)
+$item->unit_price = (float) $data['sena'];
 $item->currency_id = 'ARS';
 
 $preference->items = array($item);
 
-// Opcional: Agregar URL de notificación (webhook) para actualizar el status después del pago
-// $preference->notification_url = 'https://tu-sitio.com/php/webhook_mercadopago.php'; // Implementa esto por separado
+$preference->back_urls = array(
+    "success" => "https://peluqueriagold.free.nf/php/capturar.php",
+    "failure" => "https://peluqueriagold.free.nf/php/turno.php"
+);
+
+$preference->notification_url = "https://peluqueriagold.free.nf/php/webhook_mercadopago.php"; // Puedes dejarlo, pero como no lo usas, ignóralo o remuévelo.
+
+$external_reference = implode('|', [
+    $data['user_id'],
+    $data['date'],
+    $data['time'],
+    $data['category_key'],
+    $data['sub_table'],
+    $data['sub_id'],
+    $data['subservicio_name'],
+    $data['sena']
+]);
+$preference->external_reference = $external_reference;
+
+$preference->auto_return = 'approved'; // Redirección automática en éxito
 
 $preference->save();
 
@@ -53,25 +67,5 @@ if (!$preference->id) {
     exit;
 }
 
-// Insertar la reserva en la DB con status 'pendiente' y sena_pagada = 0 (se actualizará después del pago exitoso)
-$stmtInsert = $pdo->prepare("
-    INSERT INTO reservas (id_usuario, fecha, hora, category_key, sub_table, sub_id, subservicio_name, sena_pagada, status)
-    VALUES (:user_id, :fecha, :hora, :category_key, :sub_table, :sub_id, :subservicio_name, 0.00, 'pendiente')
-");
-$stmtInsert->execute([
-    ':user_id' => $data['user_id'],
-    ':fecha' => $data['date'],
-    ':hora' => $data['time'],
-    ':category_key' => $data['category_key'],
-    ':sub_table' => $data['sub_table'],
-    ':sub_id' => $data['sub_id'],
-    ':subservicio_name' => $data['subservicio_name']
-]);
-
-// Marcar el horario como no disponible (ocupado)
-$stmtUpdateHorario = $pdo->prepare("UPDATE horarios SET disponible = 'no' WHERE fecha = :fecha AND hora = :hora");
-$stmtUpdateHorario->execute([':fecha' => $data['date'], ':hora' => $data['time']]);
-
-// Responder con el init_point para redirigir al usuario a Mercado Pago
 echo json_encode(['success' => true, 'init_point' => $preference->init_point]);
 ?>
