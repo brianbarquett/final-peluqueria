@@ -72,7 +72,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
     <!-- NAVBAR -->
    <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+        <a class="navbar-brand" href="#">&#x1F808;Gold Style</a>
         <div class="boton-nav d-flex align-items-center">
             <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
             <!-- Dropdown para foto de perfil: envuelve img y ul en <div class="dropdown dropdown-center"> para centrado debajo de la foto -->

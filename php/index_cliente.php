@@ -40,7 +40,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BarberShop Gold Style</title>
+    <title><-Gold Style</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -49,7 +49,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
     <!-- NAVBAR -->
 <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+        <a class="navbar-brand" href="#">Gold Style</a>
         <div class="boton-nav d-flex align-items-center">
             <!-- AGREGADO: ÍCONO DE TURNOS -->
             <a href="mis_turnos.php" class="text-white me-2"><i class="bi bi-calendar-check fs-4"></i></a>
@@ -61,23 +61,25 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
                 </ul>
             </div>
-            <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
             <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
         </div>
     </div>
 </nav>
 
-    <!-- PORTADA -->
-    <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen']) ?>');">
-        <div class="portada-contenido">
+    <!-- PORTADA (adaptada como cover de servicio.css) -->
+    <div class="cover" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen']) ?>');">
+        <div class="cover-overlay"></div>
+        <div class="cover-content">
             <h1><?= htmlspecialchars($portada['titulo']) ?></h1>
             <div class="linea"></div>
             <p><?= htmlspecialchars($portada['descripcion']) ?></p>
-            <a href="turno.php" class="btn-transparente mt-3">Sacar turno</a><br>
-            <div class="texto">Leer más</div>
-            <div class="contenedor-flechas">
-            <div class="flecha"></div>
-            <div class="flecha"></div>
+            <a href="php/turno.php" class="btn-transparente mt-3">Sacar turno</a>
+        </div>
+        <div class="read-more">
+            <span>Leer más</span>
+            <div class="arrows">
+                <i class="bi bi-chevron-down"></i>
+                <i class="bi bi-chevron-down"></i>
             </div>
         </div>
     </div>

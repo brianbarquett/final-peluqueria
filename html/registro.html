@@ -24,8 +24,11 @@
         <div class="panel" id="formPanel">
             <!-- Sección del formulario de registro -->
             <div id="signupFormDiv" class="form-div">
-                <h2>Registro de Usuario</h2>
-                <form id="signupForm" action="../php/procesar_registro.php" method="POST" onsubmit="return validateSignup(event)">
+                <div class="reg">
+                    <h2>Registro</h2>
+                </div>
+                <div class="cont">
+                    <form id="signupForm" action="../php/procesar_registro.php" method="POST" onsubmit="return validateSignup(event)">
                     <input type="text" name="nombre" placeholder="Nombre completo" id="fullName" required>
                     <input type="text" name="dni" placeholder="DNI" id="dni" required>
                     <input type="number" name="edad" placeholder="Edad" id="age" required min="1" max="120">
@@ -35,6 +38,7 @@
                     <button type="submit">Registrarse</button>
                     <button type="button" onclick="showLoginPanel()">Iniciar Sesión</button>
                 </form>
+                </div>
             </div>
             <!-- Sección del formulario de inicio de sesión (oculta inicialmente) -->
             <div id="loginFormDiv" class="form-div" style="display: none;">
