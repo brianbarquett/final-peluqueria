@@ -18,16 +18,17 @@ $portada = $stmtPortada->fetch();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BarberShop Gold Style</title>
+    <title>Gold Style</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Ruta corregida al CSS -->
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-    <!-- NAVBAR -->
+   <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <a class="navbar-brand" href="#">💈Gold Style</a>
             <div class="boton-nav">
                 <!-- Ruta corregida al login -->
                 <a href="../html/registro.html?mode=login" class="btn btn-outline-light">Iniciar sesión</a>
@@ -35,17 +36,20 @@ $portada = $stmtPortada->fetch();
         </div>
     </nav>
 
-    <!-- PORTADA -->
-    <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen']) ?>');">
-        <div class="portada-contenido">
+   <!-- PORTADA (adaptada como cover de servicio.css) -->
+    <div class="cover" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen']) ?>');">
+        <div class="cover-overlay"></div>
+        <div class="cover-content">
             <h1><?= htmlspecialchars($portada['titulo']) ?></h1>
             <div class="linea"></div>
             <p><?= htmlspecialchars($portada['descripcion']) ?></p>
-            <a href="sacar_turno.php" class="btn-transparente mt-3">Sacar turno</a><br>
-            <div class="texto">Leer más</div>
-            <div class="contenedor-flechas">
-            <div class="flecha"></div>
-            <div class="flecha"></div>
+            <a href="turno.php" class="btn-transparente mt-3">Sacar turno</a>
+        </div>
+        <div class="read-more">
+            <span>Leer más</span>
+            <div class="arrows">
+                <i class="bi bi-chevron-down"></i>
+                <i class="bi bi-chevron-down"></i>
             </div>
         </div>
     </div>
@@ -78,6 +82,97 @@ $portada = $stmtPortada->fetch();
             <?php endforeach; ?>
         </div>
     </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Sobre Gold Style -->
+            <div class="footer-section">
+                <h3>💈 Gold Style</h3>
+                <p>
+                    Barbería de élite donde el estilo se encuentra con la tradición. 
+                    Ofrecemos servicios de alta calidad para el caballero moderno.
+                </p>
+                <p>
+                    <strong>Horarios:</strong><br>
+                    Lun - Sáb: 9:00 AM - 8:00 PM<br>
+                    Dom: 10:00 AM - 4:00 PM
+                </p>
+            </div>
+
+            <!-- Enlaces Rápidos -->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="index_cliente.php">Inicio</a></li>
+                    <li><a href="turno.php">Sacar Turno</a></li>
+                    <li><a href="mis_turnos.php">Mis Turnos</a></li>
+                    <li><a href="servicios/cortes.php">Cortes</a></li>
+                    <li><a href="servicios/barbas.php">Barbas</a></li>
+                </ul>
+            </div>
+
+            <!-- Redes Sociales -->
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <p>Conéctate con nosotros en redes sociales</p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" title="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" title="Twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="https://whatsapp.com" target="_blank" title="WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                    <a href="https://tiktok.com" target="_blank" title="TikTok">
+                        <i class="bi bi-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul class="contact-info">
+                    <li>
+                        <i class="bi bi-geo-alt-fill"></i>
+                        Calle 46 68, La Plata piso 2
+                    </li>
+                    <li>
+                        <i class="bi bi-telephone-fill"></i>
+                        +54 123 456 7890
+                    </li>
+                    <li>
+                        <i class="bi bi-envelope-fill"></i>
+                        info@goldstyle.com
+                    </li>
+                    <li>
+                        <i class="bi bi-clock-fill"></i>
+                        Lun-Sáb: 9AM - 8PM
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Barra inferior con copyright -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="copyright">
+                    &copy; <?php echo date('Y'); ?> Gold Style BarberShop. Todos los derechos reservados.
+                </div>
+                <div class="designer">
+                    Designed with <i class="bi bi-heart-fill"></i> by 
+                    <span class="designer-name">BrianBarquett</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

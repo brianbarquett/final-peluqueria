@@ -208,6 +208,97 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
         </div>
     </div>
 </div>
+<!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Sobre Gold Style -->
+            <div class="footer-section">
+                <h3>💈 Gold Style</h3>
+                <p>
+                    Barbería de élite donde el estilo se encuentra con la tradición. 
+                    Ofrecemos servicios de alta calidad para el caballero moderno.
+                </p>
+                <p>
+                    <strong>Horarios:</strong><br>
+                    Lun - Sáb: 9:00 AM - 8:00 PM<br>
+                    Dom: 10:00 AM - 4:00 PM
+                </p>
+            </div>
+
+            <!-- Enlaces Rápidos -->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="index_cliente.php">Inicio</a></li>
+                    <li><a href="turno.php">Sacar Turno</a></li>
+                    <li><a href="mis_turnos.php">Mis Turnos</a></li>
+                    <li><a href="servicios/cortes.php">Cortes</a></li>
+                    <li><a href="servicios/barbas.php">Barbas</a></li>
+                </ul>
+            </div>
+
+            <!-- Redes Sociales -->
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <p>Conéctate con nosotros en redes sociales</p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" title="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" title="Twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="https://whatsapp.com" target="_blank" title="WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                    <a href="https://tiktok.com" target="_blank" title="TikTok">
+                        <i class="bi bi-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul class="contact-info">
+                    <li>
+                        <i class="bi bi-geo-alt-fill"></i>
+                        Calle 46 68, La Plata piso 2
+                    </li>
+                    <li>
+                        <i class="bi bi-telephone-fill"></i>
+                        +54 123 456 7890
+                    </li>
+                    <li>
+                        <i class="bi bi-envelope-fill"></i>
+                        info@goldstyle.com
+                    </li>
+                    <li>
+                        <i class="bi bi-clock-fill"></i>
+                        Lun-Sáb: 9AM - 8PM
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Barra inferior con copyright -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="copyright">
+                    &copy; <?php echo date('Y'); ?> Gold Style BarberShop. Todos los derechos reservados.
+                </div>
+                <div class="designer">
+                    Designed with <i class="bi bi-heart-fill"></i> by 
+                    <span class="designer-name">BrianBarquett</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

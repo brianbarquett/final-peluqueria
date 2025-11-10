@@ -34,6 +34,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sacar Turnos</title>
     <link rel="stylesheet" href="/css/turno.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -47,8 +48,10 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index_cliente.php"><- Gold Style</a>
+            <a class="navbar-brand" href="index_cliente.php">🠈Gold Style</a>
             <div class="boton-nav d-flex align-items-center">
+                <!-- AGREGADO: ÍCONO DE TURNOS -->
+                <a href="mis_turnos.php" class="text-white me-2"><i class="bi bi-calendar-check fs-4"></i></a>
                 <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
                 <div class="dropdown">
                     <img src="uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle me-2 dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover;" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,7 +59,6 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
                     </ul>
                 </div>
-                <a href="config_cliente.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
                 <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
             </div>
         </div>
@@ -154,6 +156,98 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
             </div>
         </div>
     </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Sobre Gold Style -->
+            <div class="footer-section">
+                <h3>💈 Gold Style</h3>
+                <p>
+                    Barbería de élite donde el estilo se encuentra con la tradición. 
+                    Ofrecemos servicios de alta calidad para el caballero moderno.
+                </p>
+                <p>
+                    <strong>Horarios:</strong><br>
+                    Lun - Sáb: 9:00 AM - 8:00 PM<br>
+                    Dom: 10:00 AM - 4:00 PM
+                </p>
+            </div>
+
+            <!-- Enlaces Rápidos -->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="index_cliente.php">Inicio</a></li>
+                    <li><a href="turno.php">Sacar Turno</a></li>
+                    <li><a href="mis_turnos.php">Mis Turnos</a></li>
+                    <li><a href="servicios/cortes.php">Cortes</a></li>
+                    <li><a href="servicios/barbas.php">Barbas</a></li>
+                </ul>
+            </div>
+
+            <!-- Redes Sociales -->
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <p>Conéctate con nosotros en redes sociales</p>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" title="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" title="Twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="https://whatsapp.com" target="_blank" title="WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                    <a href="https://tiktok.com" target="_blank" title="TikTok">
+                        <i class="bi bi-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul class="contact-info">
+                    <li>
+                        <i class="bi bi-geo-alt-fill"></i>
+                        Calle 46 68, La Plata piso 2
+                    </li>
+                    <li>
+                        <i class="bi bi-telephone-fill"></i>
+                        +54 123 456 7890
+                    </li>
+                    <li>
+                        <i class="bi bi-envelope-fill"></i>
+                        info@goldstyle.com
+                    </li>
+                    <li>
+                        <i class="bi bi-clock-fill"></i>
+                        Lun-Sáb: 9AM - 8PM
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Barra inferior con copyright -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="copyright">
+                    &copy; <?php echo date('Y'); ?> Gold Style BarberShop. Todos los derechos reservados.
+                </div>
+                <div class="designer">
+                    Designed with <i class="bi bi-heart-fill"></i> by 
+                    <span class="designer-name">BrianBarquett</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -176,6 +270,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
         for (let i = 0; i < 7; i++) {
             const day = new Date(today);
             day.setDate(today.getDate() + i);
+            if (day.getDay() === 0) continue; // Excluir domingos
             const dayButton = document.createElement('button');
             dayButton.classList.add('day-button');
             dayButton.textContent = day.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' });
@@ -337,5 +432,6 @@ document.getElementById('abonarSena').onclick = () => {
             selectDay(daysContainer.children[0], daysContainer.children[0].dataset.date);
         }
     </script>
+    
 </body>
 </html>
