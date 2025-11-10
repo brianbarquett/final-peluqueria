@@ -67,11 +67,11 @@ try {
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <a class="navbar-brand" href="/php/index_admin.php">🠈Gold Style</a>
             <div class="boton-nav d-flex align-items-center">
                 <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Admin'); ?></span>
                 <img src="https://via.placeholder.com/40" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                <a href="config_admin.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
+                <a href="/php/config_admin.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
                 <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
             </div>
         </div>
@@ -101,11 +101,6 @@ try {
         </div>
         <button class="btn btn-light edit-intro-btn" data-bs-toggle="modal" data-bs-target="#editIntroModal">Editar Intro</button>
     </div>
-
-    <!-- Contenedores dinámicos (resto igual) -->
-    <?php foreach ($contenidos as $index => $contenido): ?>
-        <!-- ... (código de contenedores existente) ... -->
-    <?php endforeach; ?>
 
     <!-- ... (botón agregar nuevo, modales existentes) ... -->
 
@@ -147,6 +142,7 @@ try {
                             <p><?php echo htmlspecialchars($contenido['descripcion']); ?></p>
                             <p>Precio: $<?php echo number_format($contenido['precio'], 2); ?></p> <!-- Mostrar precio -->
                             <button class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $contenido['id']; ?>">Editar</button>
+                            <button class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $contenido['id']; ?>">Eliminar</button>
                         </div>
                         <div class="col-md-5">
                             <img src="/php/<?php echo $contenido['imagen'] ? htmlspecialchars($contenido['imagen']) : 'https://via.placeholder.com/500'; ?>" class="content-image" alt="Imagen <?php echo $contenido['id']; ?>">
@@ -160,6 +156,7 @@ try {
                             <p><?php echo htmlspecialchars($contenido['descripcion']); ?></p>
                             <p>Precio: $<?php echo number_format($contenido['precio'], 2); ?></p> <!-- Mostrar precio -->
                             <button class="btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $contenido['id']; ?>">Editar</button>
+                            <button class="btn btn-danger delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $contenido['id']; ?>">Eliminar</button>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -194,6 +191,28 @@ try {
                                 <input type="file" class="form-control" id="imagen<?php echo $contenido['id']; ?>" name="imagen" accept="image/*">
                             </div>
                             <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para eliminar contenedor -->
+        <div class="modal fade" id="deleteModal<?php echo $contenido['id']; ?>" tabindex="-1" aria-labelledby="deleteModal<?php echo $contenido['id']; ?>Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModal<?php echo $contenido['id']; ?>Label">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Está seguro de que desea eliminar el subservicio "<?php echo htmlspecialchars($contenido['titulo']); ?>"?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <form action="/php/eliminar_barba.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $contenido['id']; ?>">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
                     </div>
                 </div>

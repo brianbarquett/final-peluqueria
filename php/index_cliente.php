@@ -378,7 +378,8 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
         <div class="row g-0">
             <?php foreach ($servicios as $seccion => $servicio): ?>
                 <?php 
-                $link = str_replace('_publico.php', '.php', $servicio['link']);
+                $base_name = str_replace('.php', '', $servicio['link']);
+                $link = 'servicios/' . $base_name . '.php';
                 ?>
                 <div class="col-<?= in_array($seccion, ['section-1', 'section-4', 'section-5']) ? '7' : '5' ?> p-0">
                     <div class="section <?= $seccion ?>" 
@@ -441,11 +442,11 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
             <div class="footer-section">
                 <h3>Enlaces Rápidos</h3>
                 <ul class="footer-links">
-                    <li><a href="index_cliente.php">Inicio</a></li>
-                    <li><a href="turno.php">Sacar Turno</a></li>
-                    <li><a href="mis_turnos.php">Mis Turnos</a></li>
-                    <li><a href="servicios/cortes.php">Cortes</a></li>
-                    <li><a href="servicios/barbas.php">Barbas</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Sacar Turno</a></li>
+                    <li><a href="#">Mis Turnos</a></li>
+                    <li><a href="#">Cortes</a></li>
+                    <li><a href="#">Barbas</a></li>
                 </ul>
             </div>
 

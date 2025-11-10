@@ -145,6 +145,7 @@ html, body {
     animation: fadeInUp 1s ease-out 0.3s forwards;
 }
 
+
 .read-more span {
     color: var(--gold-light);
     font-size: clamp(0.875rem, 2vw, 1rem);
@@ -399,6 +400,9 @@ html, body {
     transform: translateY(-0.1875rem);
 }
 
+.dropdown{
+    padding-right: 10px;
+}
 /* DROPDOWN */
 .dropdown-menu {
     background: var(--black-secondary);
@@ -408,6 +412,7 @@ html, body {
 
 .dropdown-item {
     color: var(--gold-light);
+
 }
 
 .dropdown-item:hover {

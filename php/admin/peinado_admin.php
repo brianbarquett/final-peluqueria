@@ -67,11 +67,11 @@ try {
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <a class="navbar-brand" href="/php/index_admin.php">🠈Gold Style</a>
             <div class="boton-nav d-flex align-items-center">
                 <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Admin'); ?></span>
                 <img src="https://via.placeholder.com/40" alt="Foto de Perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                <a href="config_admin.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
+                <a href="/php/config_admin.php" class="text-white me-2"><i class="bi bi-gear fs-4"></i></a>
                 <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
             </div>
         </div>
@@ -215,7 +215,7 @@ try {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/php/guardar_corte.php" method="POST" enctype="multipart/form-data">
+                    <form action="/php/guardar_peinado.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="0">
                         <div class="mb-3">
                             <label for="tituloNuevo" class="form-label">Título</label>

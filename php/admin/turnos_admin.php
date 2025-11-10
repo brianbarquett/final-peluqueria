@@ -34,7 +34,7 @@ $turnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style - Admin Turnos</a>
+            <a class="navbar-brand" href="/php/index_admin.php">🠈Gold Style - Admin Turnos</a>
             <div class="d-flex align-items-center">
                 <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Admin'); ?></span>
                 <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>

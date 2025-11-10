@@ -430,11 +430,11 @@ $turnosHistorial = $stmtHistorial->fetchAll();
             <div class="footer-section">
                 <h3>Enlaces Rápidos</h3>
                 <ul class="footer-links">
-                    <li><a href="index_cliente.php">Inicio</a></li>
-                    <li><a href="turno.php">Sacar Turno</a></li>
-                    <li><a href="mis_turnos.php">Mis Turnos</a></li>
-                    <li><a href="servicios/cortes.php">Cortes</a></li>
-                    <li><a href="servicios/barbas.php">Barbas</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Sacar Turno</a></li>
+                    <li><a href="#">Mis Turnos</a></li>
+                    <li><a href="#">Cortes</a></li>
+                    <li><a href="#">Barbas</a></li>
                 </ul>
             </div>
 

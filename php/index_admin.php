@@ -49,7 +49,7 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarberShop Gold Style</a>
+            <a class="navbar-brand" href="#">💈Gold Style</a>
             <div class="boton-nav d-flex align-items-center">
                 <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Admin'); ?></span>
                 <div class="dropdown">
@@ -64,13 +64,15 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
         </div>
     </nav>
 
-    <!-- PORTADA -->
-    <div class="portada" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen'] ?? '') ?>');">
-        <div class="portada-contenido">
+    <!-- PORTADA (ahora con estilos de index_cliente.php) -->
+    <div class="cover" style="background-image: url('uploads/<?= htmlspecialchars($portada['imagen'] ?? '') ?>');">
+        <div class="cover-overlay"></div>
+        <div class="cover-content">
             <h1><?= htmlspecialchars($portada['titulo'] ?? '') ?></h1>
             <div class="linea"></div>
             <p><?= htmlspecialchars($portada['descripcion'] ?? '') ?></p>
-            <a href="turnos_admin.php" class="btn-transparente mt-3">Turnos</a><br>
+            <!-- Mantengo los botones y funciones del admin -->
+            <a href="turnos_admin.php" class="btn-transparente mt-3">Turnos</a>
             <button class="btn btn-warning mt-3"
                 onclick='editarPortada(
                     <?= json_encode($portada["titulo"] ?? '') ?>, 
@@ -80,10 +82,12 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
                 )'>
                 Editar portada
             </button>
-            <div class="texto">Leer más</div>
-            <div class="contenedor-flechas">
-            <div class="flecha"></div>
-            <div class="flecha"></div>
+        </div>
+        <div class="read-more">
+            <span>Leer más</span>
+            <div class="arrows">
+                <i class="bi bi-chevron-down"></i>
+                <i class="bi bi-chevron-down"></i>
             </div>
         </div>
     </div>
@@ -229,11 +233,11 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
             <div class="footer-section">
                 <h3>Enlaces Rápidos</h3>
                 <ul class="footer-links">
-                    <li><a href="index_cliente.php">Inicio</a></li>
-                    <li><a href="turno.php">Sacar Turno</a></li>
-                    <li><a href="mis_turnos.php">Mis Turnos</a></li>
-                    <li><a href="servicios/cortes.php">Cortes</a></li>
-                    <li><a href="servicios/barbas.php">Barbas</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Sacar Turno</a></li>
+                    <li><a href="#">Mis Turnos</a></li>
+                    <li><a href="#.php">Cortes</a></li>
+                    <li><a href="#">Barbas</a></li>
                 </ul>
             </div>
 

@@ -29,7 +29,7 @@
                 </div>
                 <div class="cont">
                     <form id="signupForm" action="../php/procesar_registro.php" method="POST" onsubmit="return validateSignup(event)">
-                    <input type="text" name="nombre" placeholder="Nombre completo" id="fullName" required>
+                    <input type="text" name="nombre" placeholder="Nombre " id="fullName" required>
                     <input type="text" name="dni" placeholder="DNI" id="dni" required>
                     <input type="number" name="edad" placeholder="Edad" id="age" required min="1" max="120">
                     <input type="tel" name="telefono" placeholder="Teléfono" id="phone" required>
@@ -171,12 +171,12 @@
                 showError('Todos los campos son obligatorios.');
                 return false;
             }
-            if (age < 1 || age > 120) {
-                showError('La edad debe estar entre 1 y 120 años.');
+            if (age < 14 || age > 120) {
+                showError('Debes tener almenos 14 años para registrarte.');
                 return false;
             }
             if (!/^\d{8,10}$/.test(phone)) {
-                showError('El teléfono debe tener entre 8 y 10 dígitos.');
+                showError('Ingresa un numero de telefono valido.');
                 return false;
             }
             if (password.length < 6) {
@@ -188,7 +188,7 @@
                 return false;
             }
             if (!/^\d{8}$/.test(dni)) {
-                showError('El DNI debe tener exactamente 8 dígitos.');
+                showError('Escribe correctamente el DNI .');
                 return false;
             }
 

@@ -103,11 +103,11 @@ $portada = $stmtPortada->fetch();
         <div class="footer-section">
             <h3>Enlaces Rápidos</h3>
             <ul class="footer-links">
-                <li><a href="php/servicios/cortes_publico.php">Cortes</a></li>
-                <li><a href="php/servicios/barbas_publico.php">Barbas</a></li>
-                <li><a href="php/servicios/productos_publico.php">Productos</a></li>
-                <li><a href="php/servicios/servicios_completos_publico.php">Servicios Completos</a></li>
-                <li><a href="php/turno.php">Reservar Turno</a></li>
+                <li><a href="#">Cortes</a></li>
+                <li><a href="#">Barbas</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Servicios Completos</a></li>
+                <li><a href="#">Reservar Turno</a></li>
             </ul>
         </div>
 
