@@ -68,15 +68,15 @@ $portada = $stmtPortada->fetch();
                          style="background-image: url('php/uploads/<?= htmlspecialchars($servicio['imagen']) ?>'); 
                                 background-size: cover; background-position: center; position: relative;">
 
-                        <!-- Enlace invisible sobre toda la sección -->
-                        <a href="<?= htmlspecialchars($link) ?>" 
-                           style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></a>
-
                         <!-- Contenido -->
                         <div class="contenido-seccion">
                             <h2 class="titulo-sec"><?= htmlspecialchars($servicio['titulo']) ?></h2>
                             <p class="parr"><?= htmlspecialchars($servicio['descripcion']) ?></p>
                         </div>
+
+                        <!-- Enlace invisible sobre toda la sección (movido después del contenido para que esté encima) -->
+                        <a href="<?= htmlspecialchars($link) ?>" 
+                           style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:2;"></a>
                     </div>
                 </div>
             <?php endforeach; ?>

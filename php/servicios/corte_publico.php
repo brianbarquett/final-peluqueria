@@ -338,7 +338,7 @@ try {
     <!-- NAVBAR -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/php/index_principal.php">🠈Gold Style</a>
+            <a class="navbar-brand" href="/php/index_principal.php"><i class="bi bi-arrow-left-circle"></i>Gold Style</a>
             <div class="boton-nav">
                 <a href="/html/registro.html?mode=login" class="btn btn-outline-light">Iniciar sesión</a>
             </div>

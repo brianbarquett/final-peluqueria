@@ -172,7 +172,7 @@ body {
     font-size: 2rem;
     color: var(--gold-primary);
     animation: moverFlechaAbajo 1.5s infinite ease-in-out;
-    filter: drop-shadow(0 0 0.625rem rgba(212, 175, 55, 0.5));
+    filter: drop-shadow(0 0 0.625rem rgba(255, 204, 36, 0.774));
 }
 
 .arrows i:nth-child(1) {

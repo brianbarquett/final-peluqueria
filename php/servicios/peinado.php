@@ -73,7 +73,90 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
         /* ==================== FOOTER ==================== */
 /* Agrega estos estilos a tu footer.css o a un stylesheet global */
 
+/* MODALES */
+.modal-content {
+    background: linear-gradient(145deg, var(--black-secondary) 0%, var(--black-primary) 100%);
+    border: 2px solid var(--gold-dark);
+    color: var(--white);
+    border-radius: 20px;
+}
 
+.modal-header {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+    border: none;
+    border-radius: 18px 18px 0 0;
+}
+
+.modal-title {
+    color: var(--black-primary);
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.modal-footer {
+    border: none;
+    background: var(--black-secondary);
+    border-radius: 0 0 18px 18px;
+}
+
+.form-label {
+    color: var(--gold-light);
+    font-weight: 600;
+}
+
+.form-control {
+    background: var(--black-light);
+    border: 2px solid var(--gold-dark);
+    color: var(--white);
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    background: var(--black-secondary);
+    border-color: var(--gold-primary);
+    color: var(--white);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%) !important;
+    border: none !important;
+    color: var(--black-primary) !important;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+}
+
+.btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.dropdown-menu {
+    background: var(--black-secondary);
+    border: 2px solid var(--gold-dark);
+    border-radius: 12px;
+}
+
+.dropdown-item {
+    color: var(--gold-light);
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 100%);
+    color: var(--black-primary);
+}
 
 /* Asegura que el footer ocupe todo el ancho y se quede al fondo */
 .footer {
@@ -357,27 +440,95 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
         grid-template-columns: repeat(2, 1fr);
     }
 }
+/* Estilos adicionales para navbar */
+        .navbar .navbar-collapse {
+            background: var(--black-secondary);
+            border-top: 1px solid var(--gold-dark);
+        }
+        .navbar .navbar-nav .nav-link {
+            color: var(--gold-light) !important;
+            padding: 10px 20px;
+        }
+        .navbar .navbar-nav .nav-link:hover {
+            color: var(--gold-primary) !important;
+        }
+        /* Ocultar toggler en desktop */
+        @media (min-width: 768px) {
+            .navbar-toggler {
+                display: none;
+            }
+        }
+        /* Estilos para desktop */
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex !important;
+            }
+            .mobile-user-name {
+                display: none;
+            }
+            .mobile-change-photo {
+                display: none;
+            }
+        }
+        /* Estilos para mobile */
+        @media (max-width: 767px) {
+            .desktop-nav {
+                display: none !important;
+            }
+            .user-info-desktop {
+                display: none;
+            }
+            .user-info-mobile img {
+                margin-right: 10px;
+            }
+        }
     </style>
-    <!-- NAVBAR -->
+    <!-- NAVBAR MODIFICADA -->
     <nav class="navbar navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/php/index_cliente.php">🠈Gold Style</a>
-        <div class="boton-nav d-flex align-items-center">
-            <!-- AGREGADO: ÍCONO DE TURNOS -->
-            <a href="/php/mis_turnos.php" class="text-white me-2"><i class="bi bi-calendar-check fs-4"></i></a>
-            <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
-            <!-- Dropdown para foto de perfil: envuelve img y ul en <div class="dropdown dropdown-center"> para centrado debajo de la foto -->
-            <div class="dropdown dropdown-center">
-                <img src="/php/uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover; cursor: pointer;" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/php/index_cliente.php"><i class="bi bi-arrow-left-circle"></i>Gold Style</a>
+            <!-- Foto de perfil visible en mobile al lado del toggler -->
+            <div class="user-info-mobile d-flex align-items-center d-md-none me-2">
+                <img src="/php/uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+            </div>
+            <!-- Botón hamburguesa solo en mobile -->
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Elementos en desktop: nombre, foto con dropdown, turnos, logout -->
+            <div class="user-info-desktop d-none d-md-flex align-items-center">
+                <span class="text-white me-2"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
+                <div class="dropdown me-3">
+                    <img src="/php/uploads/<?php echo htmlspecialchars($user_foto); ?>?t=<?php echo time(); ?>" alt="Foto de Perfil" class="rounded-circle dropdown-toggle" style="width: 40px; height: 40px; object-fit: cover;" id="profileDropdownDesktop" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdownDesktop">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a></li>
+                    </ul>
+                </div>
+                <!-- Íconos en desktop -->
+                <div class="desktop-nav d-flex align-items-center">
+                    <a href="/php/mis_turnos.php" class="text-white me-3"><i class="bi bi-calendar-check fs-4"></i></a>
+                    <a href="#" class="text-white logout-link"><i class="bi bi-box-arrow-right fs-4"></i></a>
+                </div>
+            </div>
+            <!-- Menú collapse para mobile -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mobile-user-name d-md-none">
+                        <span class="nav-link"><?php echo htmlspecialchars($_SESSION["nombre"] ?? 'Usuario'); ?></span>
+                    </li>
+                    <li class="nav-item mobile-change-photo d-md-none">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#changePhotoModal">Cambiar foto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-redirect" href="/php/mis_turnos.php"><i class="bi bi-calendar-check me-2"></i>Mis Turnos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="#"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a>
+                    </li>
                 </ul>
             </div>
-            
-            <a href="?logout=1" class="text-white"><i class="bi bi-box-arrow-right fs-4"></i></a>
         </div>
-    </div>
-</nav>
+    </nav>
     <!-- Portada -->
     <div class="cover" style="background-image: url('/php/uploads/<?php echo isset($portada['imagen']) ? htmlspecialchars($portada['imagen']) : 'https://via.placeholder.com/1920x1080'; ?>');">
         <div class="cover-overlay"></div>
@@ -448,6 +599,48 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
         </div>
     </div>
 </div>
+<!-- Modal Cambiar Foto -->
+    <div class="modal fade" id="changePhotoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 20px; overflow: hidden;">
+                <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h5 class="modal-title">Cambiar Foto de Perfil</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/php/guardar_foto.php" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Selecciona una nueva foto</label>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+                            <div class="form-text">Formatos: JPG, PNG. Tamaño máximo: 5MB</div>
+                        </div>
+                        <button type="submit" class="btn btn-toggle w-100">
+                            <i class="bi bi-upload me-2"></i>Guardar Foto
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Confirmar Logout -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background: linear-gradient(145deg, var(--black-secondary) 0%, var(--black-primary) 100%); border: 2px solid var(--gold-dark); color: var(--white); border-radius: 20px;">
+                <div class="modal-header" style="background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%); border: none; border-radius: 18px 18px 0 0;">
+                    <h5 class="modal-title" style="color: var(--black-primary); font-weight: 700; letter-spacing: 2px;">Cerrar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center" style="padding: 30px;">
+                    <i class="bi bi-box-arrow-right" style="font-size: 3rem; color: var(--gold-primary); margin-bottom: 20px; display: block;"></i>
+                    <p style="color: var(--gold-light); font-size: 1.1rem; margin-bottom: 0;">¿Estás seguro de que deseas cerrar sesión?</p>
+                </div>
+                <div class="modal-footer justify-content-center" style="border: none; background: var(--black-secondary); border-radius: 0 0 18px 18px; padding: 20px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background: var(--black-light); border: 2px solid var(--gold-dark); color: var(--gold-light); border-radius: 10px; padding: 10px 25px; font-weight: 600;">Cancelar</button>
+                    <button type="button" id="confirmLogout" class="btn btn-primary" style="background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%); border: none; color: var(--black-primary); border-radius: 10px; padding: 10px 25px; font-weight: 700; transition: all 0.3s ease;">Sí, cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-content">
@@ -540,7 +733,50 @@ $user_foto = $stmtFoto->fetchColumn() ?: 'https://via.placeholder.com/40';
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript para confirmación de logout y navegación en mobile -->
+    <script>
+        // Para logout
+        document.querySelectorAll('.logout-link').forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Cerrar menú en mobile si está abierto
+                const collapseElement = document.getElementById('navbarNav');
+                const bsCollapse = bootstrap.Collapse.getInstance(collapseElement);
+                if (bsCollapse && bsCollapse._isShown()) {
+                    bsCollapse.hide();
+                }
+                // Abrir modal
+                const logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+                logoutModal.show();
+            });
+        });
+
+        // Confirmar logout en el modal
+        document.getElementById('confirmLogout').addEventListener('click', function() {
+            window.location.href = '?logout=1';
+        });
+
+        // Para links de redirección en mobile (como Mis Turnos)
+        document.querySelectorAll('.nav-redirect').forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const href = this.getAttribute('href');
+                if (href && href !== '#') {
+                    // Cerrar menú
+                    const collapseElement = document.getElementById('navbarNav');
+                    const bsCollapse = bootstrap.Collapse.getInstance(collapseElement);
+                    if (bsCollapse) {
+                        bsCollapse.hide();
+                    }
+                    // Redirigir después de cerrar
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300); // Delay para la animación de cierre
+                }
+            });
+        });
+    </script>
+
     <script>
         const sections = document.querySelectorAll('.content-section');
         const observer = new IntersectionObserver((entries) => {
