@@ -17,9 +17,7 @@ try {
             throw new Exception("Solo JPEG, PNG o GIF permitidos");
         }
 
-        if ($_FILES['foto']['size'] > 2000000) {
-            throw new Exception("Archivo demasiado grande (max 2MB)");
-        }
+    
 
         $target_dir = "uploads/";
         if (!is_dir($target_dir)) {
@@ -49,13 +47,13 @@ try {
         if ($old_foto && file_exists($target_dir . $old_foto) && $old_foto !== $foto_filename) {
             unlink($target_dir . $old_foto);
         }
+
+        header("Location: " . $_SERVER['HTTP_REFERER'] . "?success=1&t=" . time());
+        exit;
     } else {
         throw new Exception("No se subió foto");
     }
-
-    header("Location: " . $_SERVER['HTTP_REFERER'] . "?t=" . time());
-    exit;
 } catch (Exception $e) {
-    header("Location: " . $_SERVER['HTTP_REFERER'] . "?error=" . urlencode($e->getMessage()));
+    header("Location: " . $_SERVER['HTTP_REFERER'] . "?error=" . urlencode($e->getMessage()) . "&t=" . time());
     exit;
 }

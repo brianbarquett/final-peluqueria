@@ -63,10 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Encriptar contraseña
         $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+        $foto = "perfil.jpg";
 
         // Insertar usuario (rol se maneja por default en BD)
-        $sql = "INSERT INTO usuarios (nombre, dni, edad, telefono, contrasena, correo)
-                VALUES (:nombre, :dni, :edad, :telefono, :contrasena, :correo)";
+        $sql = "INSERT INTO usuarios (nombre, dni, edad, telefono, contrasena, correo, foto)
+                VALUES (:nombre, :dni, :edad, :telefono, :contrasena, :correo, :foto)";
         $stmt = $pdo->prepare($sql);
 
         $stmt->execute([
@@ -75,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ":edad"       => $edad,
             ":telefono"   => $telefono,
             ":contrasena" => $hash,
-            ":correo"     => $correo
+            ":correo"     => $correo,
+            ":foto"       => $foto
         ]);
 
         header("Location: ../html/registro.html?mode=login&success=1");
